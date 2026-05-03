@@ -1,0 +1,170 @@
+extends: spectral:oas
+rules:
+  # SAP Concur Expense API Naming Conventions
+  concur-operation-id-required:
+    description: All operations must have an operationId
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: defined
+
+  concur-operation-id-camel-case:
+    description: >-
+      SAP Concur operation IDs use camelCase (e.g., listExpenseReports,
+      createExpenseEntry, getPaymentBatch)
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].operationId"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[a-z][a-zA-Z0-9]*$"
+
+  concur-tags-title-case:
+    description: All tags must use Title Case (e.g., Expense Reports, Quick Expenses)
+    severity: warn
+    given: "$.tags[*].name"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z ]*$"
+
+  concur-path-kebab-case:
+    description: >-
+      SAP Concur API paths use lowercase kebab-case for multi-word resource names
+      (e.g., /expense/quickexpenses, /expense/receiptimages)
+    severity: warn
+    given: "$.paths[*]~"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9{}-]+)+$"
+
+  concur-response-200-has-schema:
+    description: All 200 responses must have a response schema defined
+    severity: warn
+    given: "$.paths[*][get,post].responses['200']"
+    then:
+      field: content
+      function: defined
+
+  concur-pagination-limit-param:
+    description: >-
+      Collection endpoints (GET returning arrays) should support limit parameter
+      for pagination (max 100 per SAP Concur convention)
+    severity: hint
+    given: "$.paths[*].get.parameters[?(@.name=='limit')]"
+    then:
+      field: schema.maximum
+      function: defined
+
+  concur-pagination-offset-param:
+    description: >-
+      Collection endpoints should support offset parameter for cursor-based
+      pagination using the NextPage URL pattern
+    severity: hint
+    given: "$.paths[*].get"
+    then:
+      function: schema
+      functionOptions:
+        schema:
+          type: object
+          properties:
+            parameters:
+              type: array
+
+  concur-currency-code-format:
+    description: >-
+      Currency code fields must be ISO 4217 three-letter uppercase codes.
+      SAP Concur uses CurrencyCode and TransactionCurrencyCode naming.
+    severity: hint
+    given: "$.components.schemas[*].properties[?(@property.match(/CurrencyCode$/))]"
+    then:
+      field: pattern
+      function: defined
+
+  concur-id-field-type-string:
+    description: >-
+      SAP Concur uses string identifiers (hex GUIDs) for all resource IDs.
+      ID fields must be typed as string, not integer.
+    severity: error
+    given: "$.components.schemas[*].properties.ID"
+    then:
+      field: type
+      function: enumeration
+      functionOptions:
+        values:
+          - string
+
+  concur-report-id-references:
+    description: >-
+      Expense entry endpoints require reportID as a query parameter when
+      listing entries. The ReportID parameter enables server-side filtering.
+    severity: hint
+    given: "$.paths['/expense/entries'].get.parameters[?(@.name=='reportID')]"
+    then:
+      field: required
+      function: truthy
+
+  concur-delete-returns-204:
+    description: >-
+      DELETE operations in SAP Concur APIs return 204 No Content on success
+      (not 200). Ensure DELETE responses use 204.
+    severity: warn
+    given: "$.paths[*].delete.responses"
+    then:
+      field: "204"
+      function: defined
+
+  concur-put-returns-204:
+    description: >-
+      PUT update operations in SAP Concur APIs return 204 No Content on success.
+      The full updated resource is retrieved via a subsequent GET.
+    severity: warn
+    given: "$.paths[*].put.responses"
+    then:
+      field: "204"
+      function: defined
+
+  concur-post-create-returns-200:
+    description: >-
+      POST create operations return 200 with an ID response body rather than 201.
+      This follows SAP Concur v3 API conventions.
+    severity: info
+    given: "$.paths[*].post.responses"
+    then:
+      field: "200"
+      function: defined
+
+  concur-oauth2-security-defined:
+    description: >-
+      SAP Concur APIs require OAuth 2.0 authentication. All operations should
+      reference the OAuth2 security scheme.
+    severity: warn
+    given: "$.components.securitySchemes"
+    then:
+      field: OAuth2
+      function: defined
+
+  concur-entry-id-path-param:
+    description: >-
+      Path parameters for resource IDs should be named 'id' (lowercase)
+      following SAP Concur conventions.
+    severity: hint
+    given: "$.paths[*][*].parameters[?(@.in=='path')]"
+    then:
+      field: name
+      function: enumeration
+      functionOptions:
+        values:
+          - id
+
+  concur-date-fields-iso8601:
+    description: >-
+      Date fields should use ISO 8601 format. Transaction dates use date format,
+      datetime fields use date-time format.
+    severity: warn
+    given: "$.components.schemas[*].properties[?(@property.match(/Date$/))]"
+    then:
+      field: format
+      function: defined

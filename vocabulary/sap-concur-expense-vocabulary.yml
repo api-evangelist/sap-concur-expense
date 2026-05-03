@@ -1,0 +1,220 @@
+name: SAP Concur Expense Vocabulary
+description: >-
+  Domain vocabulary for SAP Concur Expense covering expense lifecycle management,
+  travel and expense policy enforcement, reimbursement workflows, and integration
+  terminology used across the SAP Concur Expense API.
+version: '1.0'
+created: '2026-05-02'
+modified: '2026-05-02'
+terms:
+  # Core Entities
+  - term: Expense Report
+    definition: >-
+      A collection of individual expense entries submitted by an employee for
+      manager approval and financial reimbursement. Reports group expenses by
+      trip, project, or time period.
+    tags:
+      - Core Entity
+      - Expense Management
+
+  - term: Expense Entry
+    definition: >-
+      A single expense line item within an expense report representing one
+      transaction. Each entry includes amount, date, expense type, vendor,
+      and optional receipt documentation.
+    tags:
+      - Core Entity
+      - Expense Management
+
+  - term: Quick Expense
+    definition: >-
+      An expense record created without an associated report, typically captured
+      via mobile app on-the-go. Quick expenses are later promoted to full expense
+      report entries.
+    tags:
+      - Core Entity
+      - Mobile
+
+  - term: Payment Batch
+    definition: >-
+      A group of approved expense reports combined into a single payment run for
+      employee reimbursement. Batches are processed on a scheduled cycle.
+    tags:
+      - Core Entity
+      - Finance
+
+  - term: Allocation
+    definition: >-
+      A split of an expense entry across multiple cost centers, GL accounts,
+      projects, or departments using percentage or amount-based distribution.
+    tags:
+      - Core Entity
+      - Accounting
+
+  # Expense Types
+  - term: Expense Type Code
+    definition: >-
+      A short code identifying the category of business expense (e.g., BUSML for
+      Business Meal, AIRFR for Airfare, HOTEL for Hotel, GRND for Ground
+      Transportation). Expense types are configured per expense group policy.
+    abbreviation: ETC
+    tags:
+      - Configuration
+      - Expense Category
+
+  - term: Business Meal (BUSML)
+    definition: >-
+      Expense type for meals with business associates. Typically requires attendee
+      names and business purpose. Subject to per-diem limits in many policies.
+    abbreviation: BUSML
+    tags:
+      - Expense Type
+
+  - term: Airfare (AIRFR)
+    definition: >-
+      Expense type for commercial airline tickets. Often requires travel class
+      justification and preferred carrier compliance documentation.
+    abbreviation: AIRFR
+    tags:
+      - Expense Type
+      - Travel
+
+  - term: Hotel (HOTEL)
+    definition: >-
+      Expense type for lodging expenses. May require nightly rate compliance
+      with policy limits and itemization of room/tax/incidentals.
+    abbreviation: HOTEL
+    tags:
+      - Expense Type
+      - Travel
+
+  # Approval Workflow
+  - term: Approval Status
+    definition: >-
+      The current state of an expense report in the approval workflow. Status
+      codes track progression from draft (A_FILE) through manager approval
+      (A_PEND), external validation (A_EXTV), to final approval (A_APPR).
+    tags:
+      - Workflow
+      - Approval
+
+  - term: Pending Approval (A_PEND)
+    definition: >-
+      Approval status indicating the expense report has been submitted and is
+      awaiting manager or cost object approver review.
+    abbreviation: A_PEND
+    tags:
+      - Workflow Status
+
+  - term: Approved (A_APPR)
+    definition: >-
+      Final approval status indicating all required approvers have approved the
+      expense report and it is ready for payment processing.
+    abbreviation: A_APPR
+    tags:
+      - Workflow Status
+
+  - term: Draft (A_FILE)
+    definition: >-
+      Status for expense reports that have been saved but not yet submitted for
+      approval. Draft reports can be edited and deleted.
+    abbreviation: A_FILE
+    tags:
+      - Workflow Status
+
+  # Payment
+  - term: Payment Status
+    definition: >-
+      The reimbursement processing state of an approved expense report. Tracks
+      from not processed (P_NOTP) through processing (P_PROC) to paid (P_PAID).
+    tags:
+      - Finance
+      - Payment
+
+  - term: Reimbursement Method
+    definition: >-
+      How an employee is reimbursed for approved expenses. Common methods include
+      APCHECK (ACH/paper check), CNQRPAY (Concur Pay), and ADPPAYR (ADP payroll).
+    tags:
+      - Finance
+      - Payment
+
+  # Compliance
+  - term: Receipt Image
+    definition: >-
+      A digital scan or photograph of a paper receipt, or an electronic receipt
+      from a travel provider, attached to an expense entry for audit compliance.
+    tags:
+      - Compliance
+      - Document
+
+  - term: E-Receipt
+    definition: >-
+      An electronic receipt automatically imported from travel providers, credit
+      card programs, or hotel partners directly into SAP Concur, reducing manual
+      receipt capture.
+    tags:
+      - Compliance
+      - Automation
+
+  - term: Policy Exception
+    definition: >-
+      A policy violation flag on an expense entry where the amount or category
+      exceeds configured thresholds. Exceptions require justification before
+      the report can be submitted.
+    tags:
+      - Compliance
+      - Policy
+
+  - term: Digital Tax Invoice
+    definition: >-
+      Country-specific electronic invoice documents (e.g., CFDI in Mexico, NF-e
+      in Brazil) required for tax compliance and attached to expense entries.
+    tags:
+      - Compliance
+      - Tax
+
+  # Configuration
+  - term: Expense Group
+    definition: >-
+      A named policy configuration set that defines which expense types, payment
+      types, approval workflows, and spending limits apply to a group of employees.
+    tags:
+      - Configuration
+      - Policy
+
+  - term: Expense Policy
+    definition: >-
+      Rules and limits governing what expenses are reimbursable, required
+      documentation, per-diem limits, and approval routing for a given employee
+      or department group.
+    tags:
+      - Configuration
+      - Policy
+
+  # Integration
+  - term: OAuth 2.0
+    definition: >-
+      SAP Concur's authentication protocol using bearer tokens obtained via
+      authorization code or refresh token grant types. Access tokens expire
+      after one hour; refresh tokens are long-lived.
+    tags:
+      - Authentication
+      - Integration
+
+  - term: NextPage
+    definition: >-
+      Pagination cursor returned in collection responses. When present, it contains
+      the URL to retrieve the next page of results using the offset parameter.
+    tags:
+      - Pagination
+      - Integration
+
+  - term: Company-Level Access Token
+    definition: >-
+      An OAuth token granted to partner applications allowing access to all
+      employee expense data within a company, used for HR integrations and
+      ERP data synchronization.
+    tags:
+      - Authentication
+      - Integration

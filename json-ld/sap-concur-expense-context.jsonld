@@ -1,0 +1,152 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "concur": "https://developer.concur.com/ontology/expense#",
+    "sap": "https://api.sap.com/ontology#",
+
+    "ExpenseReport": {
+      "@id": "concur:ExpenseReport",
+      "@type": "@id",
+      "description": "An expense report aggregating employee business expenses for reimbursement"
+    },
+    "ExpenseEntry": {
+      "@id": "concur:ExpenseEntry",
+      "@type": "@id",
+      "description": "A single expense line item within an expense report"
+    },
+    "QuickExpense": {
+      "@id": "concur:QuickExpense",
+      "@type": "@id",
+      "description": "An unassigned expense captured before being added to a formal report"
+    },
+    "ReceiptImage": {
+      "@id": "concur:ReceiptImage",
+      "@type": "@id",
+      "description": "A digital receipt image attached to an expense entry"
+    },
+    "PaymentBatch": {
+      "@id": "concur:PaymentBatch",
+      "@type": "@id",
+      "description": "A batch of approved expense reports grouped for reimbursement payment"
+    },
+
+    "ID": {
+      "@id": "schema:identifier",
+      "@type": "xsd:string"
+    },
+    "Name": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "Total": {
+      "@id": "schema:totalPrice",
+      "@type": "xsd:decimal"
+    },
+    "CurrencyCode": {
+      "@id": "schema:priceCurrency",
+      "@type": "xsd:string"
+    },
+    "TransactionDate": {
+      "@id": "schema:paymentDueDate",
+      "@type": "xsd:date"
+    },
+    "TransactionAmount": {
+      "@id": "schema:price",
+      "@type": "xsd:decimal"
+    },
+    "TransactionCurrencyCode": {
+      "@id": "schema:priceCurrency",
+      "@type": "xsd:string"
+    },
+    "VendorDescription": {
+      "@id": "schema:vendor",
+      "@type": "xsd:string"
+    },
+    "LocationName": {
+      "@id": "schema:location",
+      "@type": "xsd:string"
+    },
+    "BusinessPurpose": {
+      "@id": "schema:description",
+      "@type": "xsd:string"
+    },
+    "OwnerLoginID": {
+      "@id": "schema:email",
+      "@type": "xsd:string"
+    },
+    "OwnerName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "SubmitDate": {
+      "@id": "schema:datePublished",
+      "@type": "xsd:dateTime"
+    },
+    "CreateDate": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "ApprovalStatusCode": {
+      "@id": "concur:approvalStatus",
+      "@type": "xsd:string"
+    },
+    "PaymentStatusCode": {
+      "@id": "concur:paymentStatus",
+      "@type": "xsd:string"
+    },
+    "ExpenseTypeCode": {
+      "@id": "concur:expenseType",
+      "@type": "xsd:string"
+    },
+    "ExpenseTypeName": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "ReceiptImageID": {
+      "@id": "concur:receiptImage",
+      "@type": "xsd:string"
+    },
+    "IsItemized": {
+      "@id": "concur:isItemized",
+      "@type": "xsd:boolean"
+    },
+    "PolicyID": {
+      "@id": "concur:policy",
+      "@type": "xsd:string"
+    },
+    "ReportID": {
+      "@id": "concur:report",
+      "@type": "xsd:string"
+    },
+    "EntryID": {
+      "@id": "concur:entry",
+      "@type": "xsd:string"
+    },
+    "Percentage": {
+      "@id": "schema:percentage",
+      "@type": "xsd:decimal"
+    },
+    "AccountCode1": {
+      "@id": "concur:glAccount",
+      "@type": "xsd:string"
+    },
+    "BatchID": {
+      "@id": "concur:paymentBatch",
+      "@type": "xsd:string"
+    },
+    "BatchTotal": {
+      "@id": "schema:totalPrice",
+      "@type": "xsd:decimal"
+    },
+    "PaymentMethod": {
+      "@id": "schema:paymentMethod",
+      "@type": "xsd:string"
+    },
+    "URI": {
+      "@id": "schema:url",
+      "@type": "@id"
+    }
+  }
+}

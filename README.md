@@ -1,148 +1,154 @@
-# SAP Concur Expense (sap-concur-expense)
-SAP Concur Expense is a travel and expense management solution that automates and streamlines expense reporting, approval workflows, and reimbursement processes for businesses.
+# SAP Concur Expense
 
-**URL:** [Visit APIs.json URL](https://www.concur.com/)
+SAP Concur Expense is a cloud-based travel and expense management solution that automates and streamlines expense reporting, approval workflows, and reimbursement processes for businesses. It integrates with corporate card programs, receipt capture, and ERP systems to provide end-to-end expense lifecycle management with audit controls and policy enforcement.
 
-## Tags:
+**URL:** https://developer.concur.com/
 
- - Expense Management, Travel, Financial Management, Reimbursement, Receipts, Reporting
+## Tags
+
+Expense Management, Financial Management, Receipts, Reimbursement, Reporting, SAP, Travel
 
 ## Timestamps
 
-- **Created:** 2025 
-- **Modified:** 2025 
+- **Created:** 2025-01-01
+- **Modified:** 2026-05-02
 
 ## APIs
 
-### Expense Report API
-Allows developers to read and write expense report headers, entries, allocations, and manage the expense report lifecycle.
+### Expense Report v3 API
 
-**Human URL:** [https://developer.concur.com/api-reference/expense/](https://developer.concur.com/api-reference/expense/)
+Allows developers to read and write expense report headers, manage the expense report lifecycle including submission and approval workflows, and retrieve expense report data for integration with ERP and financial systems.
 
+- **Base URL:** https://us.api.concursolutions.com/api/v3.0
+- **Version:** 3.0
+- **Human URL:** https://developer.concur.com/api-reference/expense/expense-report/v3.reports.html
+- **OpenAPI:** [openapi/sap-concur-expense-report-openapi.yml](openapi/sap-concur-expense-report-openapi.yml)
 
-#### Tags:
+**Properties:** Documentation, Authentication
 
- - Expenses, Reports, Financial
+### Expense Entry v3 API
 
-#### Properties
+Manage individual expense entries within expense reports including itemizations, attendees, custom fields, and form field values.
 
-- [Documentation](https://developer.concur.com/api-reference/expense/expense-report/)
-- [OpenAPI](https://developer.concur.com/api-reference/expense/expense-report/v3.reports.html)
-- [Authentication](https://developer.concur.com/api-reference/authentication/getting-started.html)
+- **Base URL:** https://us.api.concursolutions.com/api/v3.0
+- **Version:** 3.0
+- **Human URL:** https://developer.concur.com/api-reference/expense/expense-report/expense-entry.html
 
-### Quick Expense API
-Create and manage basic expenses quickly without creating a full expense report.
+### Quick Expense v3 API
 
-**Human URL:** [https://developer.concur.com/api-reference/expense/quick-expense/](https://developer.concur.com/api-reference/expense/quick-expense/)
+Create and manage basic expenses quickly outside of a formal expense report. Quick expenses can be added to an expense report later.
 
+- **Base URL:** https://us.api.concursolutions.com/api/v3.0
+- **Version:** 3.0
+- **Human URL:** https://developer.concur.com/api-reference/expense/quick-expense/v3.quick-expense.html
 
-#### Tags:
+### Receipt Image v3 API
 
- - Quick Expense, Expenses
+Upload, retrieve, and manage receipt images associated with expense entries. Supports PNG, JPG, PDF, and TIFF formats.
 
-#### Properties
-
-- [Documentation](https://developer.concur.com/api-reference/expense/quick-expense/v3.quick-expense.html)
-- [OpenAPI](https://developer.concur.com/api-reference/expense/quick-expense/v3.quick-expense.html)
-
-### Expense Entry API
-Manage individual expense entries within expense reports including itemizations and custom fields.
-
-**Human URL:** [https://developer.concur.com/api-reference/expense/expense-report/expense-entry.html](https://developer.concur.com/api-reference/expense/expense-report/expense-entry.html)
-
-
-#### Tags:
-
- - Expense Entries, Line Items
-
-#### Properties
-
-- [Documentation](https://developer.concur.com/api-reference/expense/expense-report/expense-entry.html)
+- **Base URL:** https://us.api.concursolutions.com/api/v3.0
+- **Version:** 3.0
+- **Human URL:** https://developer.concur.com/api-reference/image/v1.image.html
 
 ### Digital Tax Invoice API
-Retrieve digital tax invoice data associated with expense entries for compliance and auditing.
 
-**Human URL:** [https://developer.concur.com/api-reference/expense/digital-tax-invoices/](https://developer.concur.com/api-reference/expense/digital-tax-invoices/)
+Retrieve digital tax invoice data (CFDI, NF-e) associated with expense entries for compliance and auditing.
 
-
-#### Tags:
-
- - Tax, Invoice, Compliance
-
-#### Properties
-
-- [Documentation](https://developer.concur.com/api-reference/expense/digital-tax-invoices/digital-tax-invoice.html)
-
-### Receipt Image API
-Upload, retrieve, and manage receipt images associated with expense entries.
-
-**Human URL:** [https://developer.concur.com/api-reference/image/](https://developer.concur.com/api-reference/image/)
-
-
-#### Tags:
-
- - Receipts, Images, Documents
-
-#### Properties
-
-- [Documentation](https://developer.concur.com/api-reference/image/v1.image.html)
+- **Base URL:** https://us.api.concursolutions.com/api/v3.0
+- **Version:** 3.0
+- **Human URL:** https://developer.concur.com/api-reference/expense/digital-tax-invoices/digital-tax-invoice.html
 
 ### Expense Group Configuration API
+
 Retrieve expense group configurations including expense types, policies, and workflow settings.
 
-**Human URL:** [https://developer.concur.com/api-reference/expense/expense-report/expense-group-configurations.html](https://developer.concur.com/api-reference/expense/expense-report/expense-group-configurations.html)
-
-
-#### Tags:
-
- - Configuration, Policies, Settings
-
-#### Properties
-
-- [Documentation](https://developer.concur.com/api-reference/expense/expense-report/expense-group-configurations.html)
+- **Base URL:** https://us.api.concursolutions.com/api/v3.0
+- **Version:** 3.0
+- **Human URL:** https://developer.concur.com/api-reference/expense/expense-report/expense-group-configurations.html
 
 ### Expense Allocations API
+
 Manage allocation of expenses across multiple cost centers, projects, or departments.
 
-**Human URL:** [https://developer.concur.com/api-reference/expense/expense-report/expense-allocations.html](https://developer.concur.com/api-reference/expense/expense-report/expense-allocations.html)
+- **Base URL:** https://us.api.concursolutions.com/api/v3.0
+- **Version:** 3.0
+- **Human URL:** https://developer.concur.com/api-reference/expense/expense-report/expense-allocations.html
 
+### Payment Batch v1 API
 
-#### Tags:
-
- - Allocations, Cost Centers, Accounting
-
-#### Properties
-
-- [Documentation](https://developer.concur.com/api-reference/expense/expense-report/expense-allocations.html)
-
-### Payment Batch API
 Retrieve payment batches for processed expense reports ready for reimbursement.
 
-**Human URL:** [https://developer.concur.com/api-reference/expense/payment-batch/](https://developer.concur.com/api-reference/expense/payment-batch/)
+- **Base URL:** https://us.api.concursolutions.com/api/v1.1
+- **Version:** 1.1
+- **Human URL:** https://developer.concur.com/api-reference/expense/payment-batch/v1.payment-batches.html
 
+## Artifacts
 
-#### Tags:
+### OpenAPI Specifications
 
- - Payments, Reimbursement, Batch Processing
+| API | File |
+|-----|------|
+| SAP Concur Expense API (Reports, Entries, Quick Expenses, Receipts, Allocations, Payment Batches) | [openapi/sap-concur-expense-report-openapi.yml](openapi/sap-concur-expense-report-openapi.yml) |
 
-#### Properties
+### Capabilities
 
-- [Documentation](https://developer.concur.com/api-reference/expense/payment-batch/v1.payment-batches.html)
+Workflow-oriented Naftiko capability compositions:
 
-## Common Properties
+| Workflow | Description |
+|----------|-------------|
+| [Expense Reporting and Approval](capabilities/expense-reporting-and-approval.yaml) | Full expense report lifecycle from creation through approval and reimbursement payment batch tracking |
+| [Expense Capture and Receipts](capabilities/expense-capture-and-receipts.yaml) | On-the-go quick expense capture and receipt image management for mobile users |
 
-- [Getting Started](https://developer.concur.com/api-reference/expense/)
-- [Authentication](https://developer.concur.com/api-reference/authentication/getting-started.html)
-- [OAuth 2.0](https://developer.concur.com/api-reference/authentication/apidoc.html)
-- [API Explorer](https://developer.concur.com/api-explorer/)
-- [Support](https://developer.concur.com/support)
-- [Terms of Service](https://developer.concur.com/terms-of-use)
-- [Developer Portal](https://developer.concur.com/)
-- [Status Page](https://open.concur.com/)
-- [Release Notes](https://developer.concur.com/tools-support/release-notes/)
+**Shared per-API definitions (`capabilities/shared/`):**
+
+- [expense-report.yaml](capabilities/shared/expense-report.yaml) — Expense Report, Expense Entry, Payment Batch, and Group Configuration APIs
+- [receipt-capture.yaml](capabilities/shared/receipt-capture.yaml) — Quick Expense and Receipt Image APIs
+
+### Rules
+
+- [rules/sap-concur-expense-rules.yml](rules/sap-concur-expense-rules.yml) — Spectral ruleset enforcing SAP Concur Expense API conventions
+
+### JSON Schema
+
+- [json-schema/sap-concur-expense-report-schema.json](json-schema/sap-concur-expense-report-schema.json) — SAP Concur Expense Report
+- [json-schema/sap-concur-expense-entry-schema.json](json-schema/sap-concur-expense-entry-schema.json) — SAP Concur Expense Entry
+- [json-schema/sap-concur-expense-receipt-schema.json](json-schema/sap-concur-expense-receipt-schema.json) — SAP Concur Receipt Image
+
+### JSON Structure
+
+- [json-structure/sap-concur-expense-report-structure.json](json-structure/sap-concur-expense-report-structure.json)
+- [json-structure/sap-concur-expense-entry-structure.json](json-structure/sap-concur-expense-entry-structure.json)
+
+### JSON-LD
+
+- [json-ld/sap-concur-expense-context.jsonld](json-ld/sap-concur-expense-context.jsonld)
+
+### Examples
+
+- [examples/sap-concur-expense-list-reports-example.json](examples/sap-concur-expense-list-reports-example.json)
+- [examples/sap-concur-expense-create-entry-example.json](examples/sap-concur-expense-create-entry-example.json)
+- [examples/sap-concur-expense-list-payment-batches-example.json](examples/sap-concur-expense-list-payment-batches-example.json)
+
+### Vocabulary
+
+- [vocabulary/sap-concur-expense-vocabulary.yml](vocabulary/sap-concur-expense-vocabulary.yml)
+
+## Common Resources
+
+- **Developer Portal:** https://developer.concur.com/
+- **Getting Started:** https://developer.concur.com/api-reference/expense/
+- **Authentication:** https://developer.concur.com/api-reference/authentication/getting-started.html
+- **OAuth 2.0:** https://developer.concur.com/api-reference/authentication/apidoc.html
+- **API Explorer:** https://developer.concur.com/api-explorer/
+- **Support:** https://developer.concur.com/support
+- **Terms of Service:** https://developer.concur.com/terms-of-use
+- **Privacy Policy:** https://www.sap.com/about/legal/privacy.html
+- **Status Page:** https://open.concur.com/
+- **Release Notes:** https://developer.concur.com/tools-support/release-notes/
+- **Community:** https://community.sap.com/topics/concur
+- **GitHub Organization:** https://github.com/concur
+- **Website:** https://www.concur.com/
 
 ## Maintainers
 
-**FN:** SAP Concur
-
-**Email:** developer@concur.com
+- **Kin Lane** — kin@apievangelist.com

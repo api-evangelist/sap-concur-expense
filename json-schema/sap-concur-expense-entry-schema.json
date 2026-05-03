@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/sap-concur-expense/json-schema/sap-concur-expense-entry-schema.json",
+  "title": "SAP Concur Expense Entry",
+  "description": "Schema for an SAP Concur Expense Entry — a single expense line item within an expense report representing a specific transaction such as a meal, hotel, flight, or other business expense.",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "The unique identifier of the expense entry"
+    },
+    "ReportID": {
+      "type": "string",
+      "description": "The parent expense report ID that contains this entry"
+    },
+    "ExpenseTypeCode": {
+      "type": "string",
+      "description": "Expense category code (e.g., BUSML for Business Meal, AIRFR for Airfare, HOTEL for Hotel)"
+    },
+    "ExpenseTypeName": {
+      "type": "string",
+      "description": "Human-readable expense type label"
+    },
+    "TransactionDate": {
+      "type": "string",
+      "format": "date",
+      "description": "ISO 8601 date when the expense transaction occurred"
+    },
+    "TransactionAmount": {
+      "type": "number",
+      "description": "Expense amount in the original transaction currency"
+    },
+    "TransactionCurrencyCode": {
+      "type": "string",
+      "description": "ISO 4217 currency code for the transaction",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "PostedAmount": {
+      "type": "number",
+      "description": "Expense amount converted and posted in the report currency"
+    },
+    "ExchangeRate": {
+      "type": "number",
+      "description": "Exchange rate used to convert transaction currency to report currency"
+    },
+    "BusinessPurpose": {
+      "type": "string",
+      "description": "Description of the business reason for this expense",
+      "maxLength": 255
+    },
+    "VendorDescription": {
+      "type": "string",
+      "description": "Name of the vendor, merchant, or service provider"
+    },
+    "LocationName": {
+      "type": "string",
+      "description": "City or location where the expense was incurred"
+    },
+    "IsItemized": {
+      "type": "boolean",
+      "description": "Whether this entry has been broken down into itemized sub-entries"
+    },
+    "HasVAT": {
+      "type": "boolean",
+      "description": "Whether VAT/GST tax applies to this entry"
+    },
+    "ReceiptImageID": {
+      "type": "string",
+      "description": "ID of the receipt image attached to this entry"
+    },
+    "ReceiptReceived": {
+      "type": "boolean",
+      "description": "Whether a receipt has been received and attached"
+    },
+    "ReceiptRequired": {
+      "type": "boolean",
+      "description": "Whether a receipt is required by expense policy for this entry"
+    },
+    "Comment": {
+      "type": "string",
+      "description": "Additional notes or comments from the expense owner",
+      "maxLength": 500
+    },
+    "URI": {
+      "type": "string",
+      "format": "uri",
+      "description": "Full URI for the expense entry resource"
+    }
+  },
+  "required": ["ReportID", "ExpenseTypeCode", "TransactionDate", "TransactionAmount", "TransactionCurrencyCode"]
+}

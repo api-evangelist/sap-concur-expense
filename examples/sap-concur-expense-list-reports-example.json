@@ -1,0 +1,44 @@
+{
+  "_description": "Example response for GET /expense/reports - List Expense Reports",
+  "Items": [
+    {
+      "ID": "39BD9B5BEA224C358917F4A3369E5A28",
+      "Name": "Q1 2026 Sales Conference Travel",
+      "Total": 2450.75,
+      "CurrencyCode": "USD",
+      "ApprovalStatusCode": "A_PEND",
+      "ApprovalStatusName": "Pending Cost Object Approval",
+      "PaymentStatusCode": "P_NOTP",
+      "PaymentStatusName": "Not Processed",
+      "SubmitDate": "2026-04-15T09:30:00.000Z",
+      "CreateDate": "2026-04-10T14:22:00.000Z",
+      "OwnerLoginID": "john.smith@acme.com",
+      "OwnerName": "John Smith",
+      "PolicyID": "j_crna3c9c00-1234-5678-abcd-efgh00000000",
+      "ReportNumber": "2026-0042",
+      "HasException": false,
+      "PurposeStatement": "Expenses for North America Sales Summit in Chicago, April 10-14, 2026",
+      "URI": "https://us.api.concursolutions.com/api/v3.0/expense/reports/39BD9B5BEA224C358917F4A3369E5A28"
+    },
+    {
+      "ID": "A1B2C3D4E5F6789012345678901234AB",
+      "Name": "Client Site Visit - Boston",
+      "Total": 875.20,
+      "CurrencyCode": "USD",
+      "ApprovalStatusCode": "A_APPR",
+      "ApprovalStatusName": "Approved",
+      "PaymentStatusCode": "P_PROC",
+      "PaymentStatusName": "Processing Payment",
+      "SubmitDate": "2026-03-28T10:15:00.000Z",
+      "CreateDate": "2026-03-25T08:45:00.000Z",
+      "OwnerLoginID": "john.smith@acme.com",
+      "OwnerName": "John Smith",
+      "PolicyID": "j_crna3c9c00-1234-5678-abcd-efgh00000000",
+      "ReportNumber": "2026-0038",
+      "HasException": false,
+      "PurposeStatement": "Travel and meals for client workshop at Boston office",
+      "URI": "https://us.api.concursolutions.com/api/v3.0/expense/reports/A1B2C3D4E5F6789012345678901234AB"
+    }
+  ],
+  "NextPage": null
+}

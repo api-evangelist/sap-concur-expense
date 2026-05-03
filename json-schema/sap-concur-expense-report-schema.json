@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/sap-concur-expense/json-schema/sap-concur-expense-report-schema.json",
+  "title": "SAP Concur Expense Report",
+  "description": "Schema for an SAP Concur Expense Report, which aggregates individual expense entries submitted by an employee for approval and reimbursement.",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "The unique identifier of the expense report"
+    },
+    "Name": {
+      "type": "string",
+      "description": "The name/title of the expense report",
+      "maxLength": 40
+    },
+    "Total": {
+      "type": "number",
+      "description": "Total amount of all expenses in the report in the report currency"
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "description": "ISO 4217 three-letter currency code for the report total",
+      "pattern": "^[A-Z]{3}$"
+    },
+    "ApprovalStatusCode": {
+      "type": "string",
+      "description": "Current approval workflow status code",
+      "enum": [
+        "A_AAFH",
+        "A_AAPH",
+        "A_ADMIN",
+        "A_APPR",
+        "A_EXTV",
+        "A_FILE",
+        "A_NOTF",
+        "A_PBDG",
+        "A_PECO",
+        "A_PEND",
+        "A_PVAL",
+        "A_RESU",
+        "A_RHLD",
+        "A_TEXP"
+      ]
+    },
+    "ApprovalStatusName": {
+      "type": "string",
+      "description": "Human-readable approval status label"
+    },
+    "PaymentStatusCode": {
+      "type": "string",
+      "description": "Current payment processing status code",
+      "enum": ["P_HOLD", "P_NOTP", "P_PAID", "P_PAYC", "P_PROC"]
+    },
+    "PaymentStatusName": {
+      "type": "string",
+      "description": "Human-readable payment status label"
+    },
+    "SubmitDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 datetime when the report was submitted for approval"
+    },
+    "CreateDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 datetime when the report was created"
+    },
+    "ProcessingPaymentDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 datetime when payment processing began"
+    },
+    "OwnerLoginID": {
+      "type": "string",
+      "description": "Login ID (email) of the expense report owner"
+    },
+    "OwnerName": {
+      "type": "string",
+      "description": "Full display name of the expense report owner"
+    },
+    "PolicyID": {
+      "type": "string",
+      "description": "Identifier of the expense policy applied to this report"
+    },
+    "ReportNumber": {
+      "type": "string",
+      "description": "Human-readable sequential report number"
+    },
+    "HasException": {
+      "type": "boolean",
+      "description": "True if the report contains entries with policy exceptions requiring justification"
+    },
+    "PurposeStatement": {
+      "type": "string",
+      "description": "Business purpose statement for the expenses in this report"
+    },
+    "URI": {
+      "type": "string",
+      "format": "uri",
+      "description": "Full URI for the expense report resource"
+    }
+  },
+  "required": ["Name"]
+}

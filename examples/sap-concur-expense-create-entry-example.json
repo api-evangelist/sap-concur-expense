@@ -1,0 +1,12 @@
+{
+  "_description": "Example request body for POST /expense/entries - Create Expense Entry",
+  "ReportID": "39BD9B5BEA224C358917F4A3369E5A28",
+  "ExpenseTypeCode": "BUSML",
+  "TransactionDate": "2026-04-12",
+  "TransactionAmount": 127.50,
+  "TransactionCurrencyCode": "USD",
+  "BusinessPurpose": "Team dinner with client during sales summit",
+  "VendorDescription": "Gibson's Bar and Steakhouse Chicago",
+  "LocationName": "Chicago, IL, USA",
+  "Comment": "Dinner with 4 attendees: John Smith (host), Jane Doe, Bob Johnson (client), Alice Williams (client)"
+}

@@ -1,0 +1,204 @@
+naftiko: "1.0.0-alpha1"
+
+info:
+  label: "SAP Concur Expense Capture and Receipt Management"
+  description: >-
+    Workflow capability for mobile expense capture and receipt management in
+    SAP Concur. Enables on-the-go expense logging via quick expenses and receipt
+    image capture before formal report submission. Designed for field employees,
+    mobile users, and receipt processing integrations that capture expenses
+    at the point of transaction.
+  tags:
+    - Expense Capture
+    - Mobile
+    - Receipts
+    - SAP Concur
+    - Travel
+  created: "2026-05-02"
+  modified: "2026-05-02"
+
+binds:
+  - namespace: env
+    keys:
+      CONCUR_OAUTH_TOKEN: CONCUR_OAUTH_TOKEN
+
+capability:
+  consumes:
+    - import: concur-receipt-capture
+      location: ./shared/receipt-capture.yaml
+
+  exposes:
+    - type: rest
+      port: 8081
+      namespace: expense-capture-api
+      description: "Unified REST API for on-the-go expense capture and receipt image management."
+      resources:
+        - path: /v1/quick-expenses
+          name: quick-expenses
+          description: "Quick expense capture without a formal report"
+          operations:
+            - method: GET
+              name: list-quick-expenses
+              description: "List unassigned quick expenses"
+              call: "concur-receipt-capture.list-quick-expenses"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: POST
+              name: create-quick-expense
+              description: "Capture a new quick expense"
+              call: "concur-receipt-capture.create-quick-expense"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/quick-expenses/{id}
+          name: quick-expense-detail
+          description: "Single quick expense"
+          operations:
+            - method: GET
+              name: get-quick-expense
+              description: "Get a quick expense by ID"
+              call: "concur-receipt-capture.get-quick-expense"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-quick-expense
+              description: "Delete a quick expense"
+              call: "concur-receipt-capture.delete-quick-expense"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/receipts
+          name: receipts
+          description: "Receipt image management"
+          operations:
+            - method: GET
+              name: list-receipts
+              description: "List receipt images"
+              call: "concur-receipt-capture.list-receipt-images"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+        - path: /v1/receipts/{id}
+          name: receipt-detail
+          description: "Single receipt image"
+          operations:
+            - method: GET
+              name: get-receipt
+              description: "Get receipt image URL"
+              call: "concur-receipt-capture.get-receipt-image"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+            - method: DELETE
+              name: delete-receipt
+              description: "Delete a receipt image"
+              call: "concur-receipt-capture.delete-receipt-image"
+              with:
+                id: "rest.id"
+              outputParameters:
+                - type: object
+                  mapping: "$."
+
+    - type: mcp
+      port: 9091
+      namespace: expense-capture-mcp
+      transport: http
+      description: "MCP server for AI-assisted expense capture and receipt management."
+      tools:
+        - name: list-quick-expenses
+          description: >-
+            List all quick expenses the user has captured that have not yet been
+            assigned to a formal expense report.
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "concur-receipt-capture.list-quick-expenses"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-quick-expense
+          description: "Get details of a specific quick expense by ID."
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "concur-receipt-capture.get-quick-expense"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: create-quick-expense
+          description: >-
+            Capture a new quick expense on-the-go. Provide the expense type,
+            date, amount, currency, and optional vendor and comment. The expense
+            can later be promoted to a full expense report entry.
+          hints:
+            readOnly: false
+            destructive: false
+          call: "concur-receipt-capture.create-quick-expense"
+          with:
+            expenseTypeCode: "tools.expenseTypeCode"
+            transactionDate: "tools.transactionDate"
+            transactionAmount: "tools.transactionAmount"
+            currencyCode: "tools.currencyCode"
+            vendor: "tools.vendor"
+            comment: "tools.comment"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-quick-expense
+          description: "Delete a quick expense that is no longer needed."
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "concur-receipt-capture.delete-quick-expense"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: list-receipt-images
+          description: >-
+            List receipt images attached to expense entries. Optionally filter
+            by entry ID to find receipts for a specific expense.
+          hints:
+            readOnly: true
+            openWorld: true
+          call: "concur-receipt-capture.list-receipt-images"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: get-receipt-image
+          description: >-
+            Retrieve the download URL for a specific receipt image.
+            The URL is temporary and expires after a short period.
+          hints:
+            readOnly: true
+            openWorld: false
+          call: "concur-receipt-capture.get-receipt-image"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."
+        - name: delete-receipt-image
+          description: "Delete a receipt image that was uploaded in error."
+          hints:
+            readOnly: false
+            destructive: true
+            idempotent: true
+          call: "concur-receipt-capture.delete-receipt-image"
+          with:
+            id: "tools.id"
+          outputParameters:
+            - type: object
+              mapping: "$."

@@ -1,0 +1,50 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://api-evangelist.github.io/sap-concur-expense/json-schema/sap-concur-expense-receipt-schema.json",
+  "title": "SAP Concur Receipt Image",
+  "description": "Schema for an SAP Concur Receipt Image — a digital receipt or document image attached to an expense entry for audit and compliance purposes.",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "The unique identifier of the receipt image"
+    },
+    "EntryID": {
+      "type": "string",
+      "description": "The expense entry ID this receipt is associated with"
+    },
+    "ReceiptImageURL": {
+      "type": "string",
+      "format": "uri",
+      "description": "Temporary presigned URL to download the receipt image file"
+    },
+    "IsRequired": {
+      "type": "boolean",
+      "description": "Whether expense policy requires a receipt for the associated entry"
+    },
+    "ReceiptType": {
+      "type": "string",
+      "description": "Type of receipt (e.g., physical, e-receipt, digital tax invoice)",
+      "enum": ["physical", "e-receipt", "digital-tax-invoice", "credit-card", "other"]
+    },
+    "UploadDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 datetime when the receipt image was uploaded"
+    },
+    "FileType": {
+      "type": "string",
+      "description": "MIME type of the receipt image file",
+      "enum": ["image/png", "image/jpeg", "application/pdf", "image/tiff"]
+    },
+    "FileSizeBytes": {
+      "type": "integer",
+      "description": "Size of the receipt image file in bytes"
+    },
+    "URI": {
+      "type": "string",
+      "format": "uri",
+      "description": "Full URI for the receipt image resource"
+    }
+  }
+}

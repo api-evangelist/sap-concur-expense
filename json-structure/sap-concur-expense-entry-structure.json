@@ -1,0 +1,91 @@
+{
+  "name": "SAP Concur Expense Entry Structure",
+  "description": "Structural documentation for the SAP Concur Expense Entry object, representing a single expense line item within a report.",
+  "fields": [
+    {
+      "name": "ID",
+      "type": "string",
+      "description": "System-generated unique identifier for the entry",
+      "example": "A7A4CE0BE8344D3BAE3B9E6ABD0784DC"
+    },
+    {
+      "name": "ReportID",
+      "type": "string",
+      "description": "ID of the parent expense report",
+      "example": "39BD9B5BEA224C358917F4A3369E5A28"
+    },
+    {
+      "name": "ExpenseTypeCode",
+      "type": "string",
+      "description": "SAP Concur expense category code",
+      "example": "BUSML",
+      "commonValues": ["BUSML (Business Meal)", "AIRFR (Airfare)", "HOTEL (Hotel)", "GRND (Ground Transportation)", "PKGRD (Parking)", "TELE (Telephone)", "OFCSP (Office Supplies)"]
+    },
+    {
+      "name": "TransactionDate",
+      "type": "string (ISO 8601 date)",
+      "description": "Date the expense occurred",
+      "example": "2026-04-12"
+    },
+    {
+      "name": "TransactionAmount",
+      "type": "number",
+      "description": "Expense amount in original transaction currency",
+      "example": 127.50
+    },
+    {
+      "name": "TransactionCurrencyCode",
+      "type": "string",
+      "description": "ISO 4217 code of the currency the expense was incurred in",
+      "example": "USD"
+    },
+    {
+      "name": "PostedAmount",
+      "type": "number",
+      "description": "Amount converted to the report's home currency",
+      "example": 127.50
+    },
+    {
+      "name": "BusinessPurpose",
+      "type": "string",
+      "description": "Reason for the business expense",
+      "example": "Team dinner with client during sales summit"
+    },
+    {
+      "name": "VendorDescription",
+      "type": "string",
+      "description": "Name of the vendor where the expense was incurred",
+      "example": "Gibson's Bar & Steakhouse Chicago"
+    },
+    {
+      "name": "LocationName",
+      "type": "string",
+      "description": "City/location of the expense",
+      "example": "Chicago, IL, USA"
+    },
+    {
+      "name": "IsItemized",
+      "type": "boolean",
+      "description": "Whether the entry has detailed itemization sub-records",
+      "example": false
+    },
+    {
+      "name": "ReceiptImageID",
+      "type": "string",
+      "description": "ID of the attached receipt image",
+      "example": "D4E8F3A92C1B4E58BF3A6C7D2E9F1A0B"
+    }
+  ],
+  "relationships": [
+    {
+      "field": "ReportID",
+      "relatesTo": "ExpenseReport.ID",
+      "description": "Entry belongs to a parent expense report"
+    },
+    {
+      "field": "ReceiptImageID",
+      "relatesTo": "ReceiptImage.ID",
+      "description": "Entry may have an associated receipt image for compliance"
+    }
+  ]
+}

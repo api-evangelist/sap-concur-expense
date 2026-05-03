@@ -1,0 +1,102 @@
+{
+  "name": "SAP Concur Expense Report Structure",
+  "description": "Structural documentation for the SAP Concur Expense Report object showing field groupings, data types, and relationships.",
+  "fields": [
+    {
+      "name": "ID",
+      "type": "string",
+      "description": "System-generated unique identifier",
+      "example": "39BD9B5BEA224C358917F4A3369E5A28"
+    },
+    {
+      "name": "Name",
+      "type": "string",
+      "description": "User-provided name for the expense report",
+      "example": "Q1 2026 Sales Conference Travel"
+    },
+    {
+      "name": "Total",
+      "type": "number",
+      "description": "Sum of all entry amounts in report currency",
+      "example": 2450.75
+    },
+    {
+      "name": "CurrencyCode",
+      "type": "string",
+      "description": "ISO 4217 code (e.g., USD, EUR, GBP)",
+      "example": "USD"
+    },
+    {
+      "name": "ApprovalStatusCode",
+      "type": "string",
+      "description": "Workflow status code. A_FILE=Draft, A_PEND=Pending Manager Approval, A_APPR=Approved, A_EXTV=External Validation",
+      "example": "A_PEND"
+    },
+    {
+      "name": "PaymentStatusCode",
+      "type": "string",
+      "description": "Payment status. P_NOTP=Not Processed, P_PROC=Processing, P_PAID=Paid, P_HOLD=On Hold",
+      "example": "P_NOTP"
+    },
+    {
+      "name": "SubmitDate",
+      "type": "string (ISO 8601 datetime)",
+      "description": "When the report was submitted for approval",
+      "example": "2026-04-15T09:30:00.000Z"
+    },
+    {
+      "name": "CreateDate",
+      "type": "string (ISO 8601 datetime)",
+      "description": "When the report was initially created",
+      "example": "2026-04-10T14:22:00.000Z"
+    },
+    {
+      "name": "OwnerLoginID",
+      "type": "string",
+      "description": "Employee login (email) who owns the report",
+      "example": "john.smith@example.com"
+    },
+    {
+      "name": "OwnerName",
+      "type": "string",
+      "description": "Full name of the report owner",
+      "example": "John Smith"
+    },
+    {
+      "name": "PolicyID",
+      "type": "string",
+      "description": "Expense policy applied to the report",
+      "example": "j_crna3c9c00-000000-000000-000000000000"
+    },
+    {
+      "name": "ReportNumber",
+      "type": "string",
+      "description": "Human-readable sequential report identifier",
+      "example": "2026-0042"
+    },
+    {
+      "name": "HasException",
+      "type": "boolean",
+      "description": "True if any entry violates policy and has an exception",
+      "example": false
+    },
+    {
+      "name": "PurposeStatement",
+      "type": "string",
+      "description": "Business justification for all expenses in the report",
+      "example": "Expenses incurred attending the annual North America Sales Summit in Chicago."
+    }
+  ],
+  "relationships": [
+    {
+      "field": "ID",
+      "relatesTo": "ExpenseEntry.ReportID",
+      "description": "One report contains many expense entries"
+    },
+    {
+      "field": "PolicyID",
+      "relatesTo": "ExpenseGroupConfig.PolicyID",
+      "description": "The policy governs expense type rules and approval workflows"
+    }
+  ]
+}

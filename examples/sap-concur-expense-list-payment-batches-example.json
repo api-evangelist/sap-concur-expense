@@ -1,0 +1,26 @@
+{
+  "_description": "Example response for GET /expense/paymentbatches - List Payment Batches",
+  "PaymentBatches": [
+    {
+      "BatchID": "PB-2026-04-001",
+      "BatchName": "April 2026 Employee Reimbursements - Week 1",
+      "BatchTotal": 15432.88,
+      "BatchCurrencyCode": "USD",
+      "Count": 23,
+      "PaymentMethod": "APCHECK",
+      "BatchCloseDate": "2026-04-07T17:00:00.000Z",
+      "URI": "https://us.api.concursolutions.com/api/v1.1/expense/paymentbatches/PB-2026-04-001"
+    },
+    {
+      "BatchID": "PB-2026-03-004",
+      "BatchName": "March 2026 Employee Reimbursements - Week 4",
+      "BatchTotal": 8921.45,
+      "BatchCurrencyCode": "USD",
+      "Count": 14,
+      "PaymentMethod": "APCHECK",
+      "BatchCloseDate": "2026-03-31T17:00:00.000Z",
+      "URI": "https://us.api.concursolutions.com/api/v1.1/expense/paymentbatches/PB-2026-03-004"
+    }
+  ],
+  "NextPage": null
+}
