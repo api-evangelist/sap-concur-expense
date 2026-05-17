@@ -187,7 +187,7 @@ apis:
 common:
   - type: Developer Portal
     url: https://developer.concur.com/
-  - type: Getting Started
+  - type: GettingStarted
     url: https://developer.concur.com/api-reference/expense/
   - type: Authentication
     url: https://developer.concur.com/api-reference/authentication/getting-started.html
@@ -197,23 +197,23 @@ common:
     url: https://developer.concur.com/api-explorer/
   - type: Support
     url: https://developer.concur.com/support
-  - type: Terms of Service
+  - type: TermsOfService
     url: https://developer.concur.com/terms-of-use
-  - type: Privacy Policy
+  - type: PrivacyPolicy
     url: https://www.sap.com/about/legal/privacy.html
-  - type: Status Page
+  - type: StatusPage
     url: https://open.concur.com/
-  - type: Release Notes
+  - type: ReleaseNotes
     url: https://developer.concur.com/tools-support/release-notes/
   - type: Community
     url: https://community.sap.com/topics/concur
   - type: Blog
     url: https://developer.concur.com/blog/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     url: https://github.com/concur
   - type: Website
     url: https://www.concur.com/
-  - type: Sign Up
+  - type: SignUp
     url: https://www.concur.com/en-us/try-concur.html
   - type: SDKs
     url: https://github.com/concur/concur-platform-sdk-java
@@ -231,7 +231,7 @@ common:
     url: json-structure/sap-concur-expense-report-structure.json
   - type: JSONStructure
     url: json-structure/sap-concur-expense-entry-structure.json
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/sap-concur-expense-context.jsonld
   - type: SpectralRules
     url: rules/sap-concur-expense-rules.yml
