@@ -1,0 +1,203 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SAP Concur Expense API — Receipt Images
+  description: 'SAP Concur Expense API — Receipt Images. 4 operations. Lead operation: List Receipt Images. Self-contained
+    Naftiko capability covering one Sap Concur Expense business surface.'
+  tags:
+  - Sap Concur Expense
+  - Receipt Images
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SAP_CONCUR_EXPENSE_API_KEY: SAP_CONCUR_EXPENSE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: report-receipt-images
+    baseUri: https://us.api.concursolutions.com/api/v3.0
+    description: SAP Concur Expense API — Receipt Images business capability. Self-contained, no shared references.
+    resources:
+    - name: expense-receiptimages
+      path: /expense/receiptimages
+      operations:
+      - name: listreceiptimages
+        method: GET
+        description: List Receipt Images
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: offset
+          in: query
+          type: string
+          description: Starting page offset for pagination
+        - name: limit
+          in: query
+          type: integer
+          description: Number of records to return per page (max 100)
+        - name: entryID
+          in: query
+          type: string
+          description: Filter receipt images by expense entry ID
+      - name: createreceiptimage
+        method: POST
+        description: Upload Receipt Image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: expense-receiptimages-id
+      path: /expense/receiptimages/{id}
+      operations:
+      - name: getreceiptimage
+        method: GET
+        description: Get Receipt Image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the receipt image
+          required: true
+      - name: deletereceiptimage
+        method: DELETE
+        description: Delete Receipt Image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the receipt image
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SAP_CONCUR_EXPENSE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: report-receipt-images-rest
+    port: 8080
+    description: REST adapter for SAP Concur Expense API — Receipt Images. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/expense/receiptimages
+      name: expense-receiptimages
+      description: REST surface for expense-receiptimages.
+      operations:
+      - method: GET
+        name: listreceiptimages
+        description: List Receipt Images
+        call: report-receipt-images.listreceiptimages
+        with:
+          offset: rest.offset
+          limit: rest.limit
+          entryID: rest.entryID
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createreceiptimage
+        description: Upload Receipt Image
+        call: report-receipt-images.createreceiptimage
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/expense/receiptimages/{id}
+      name: expense-receiptimages-id
+      description: REST surface for expense-receiptimages-id.
+      operations:
+      - method: GET
+        name: getreceiptimage
+        description: Get Receipt Image
+        call: report-receipt-images.getreceiptimage
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletereceiptimage
+        description: Delete Receipt Image
+        call: report-receipt-images.deletereceiptimage
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: report-receipt-images-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SAP Concur Expense API — Receipt Images. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-receipt-images
+      description: List Receipt Images
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: report-receipt-images.listreceiptimages
+      with:
+        offset: tools.offset
+        limit: tools.limit
+        entryID: tools.entryID
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-receipt-image
+      description: Upload Receipt Image
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: report-receipt-images.createreceiptimage
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-receipt-image
+      description: Get Receipt Image
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: report-receipt-images.getreceiptimage
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-receipt-image
+      description: Delete Receipt Image
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: report-receipt-images.deletereceiptimage
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

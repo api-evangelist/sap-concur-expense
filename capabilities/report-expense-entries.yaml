@@ -1,0 +1,246 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SAP Concur Expense API — Expense Entries
+  description: 'SAP Concur Expense API — Expense Entries. 5 operations. Lead operation: List Expense Entries. Self-contained
+    Naftiko capability covering one Sap Concur Expense business surface.'
+  tags:
+  - Sap Concur Expense
+  - Expense Entries
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SAP_CONCUR_EXPENSE_API_KEY: SAP_CONCUR_EXPENSE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: report-expense-entries
+    baseUri: https://us.api.concursolutions.com/api/v3.0
+    description: SAP Concur Expense API — Expense Entries business capability. Self-contained, no shared references.
+    resources:
+    - name: expense-entries
+      path: /expense/entries
+      operations:
+      - name: listexpenseentries
+        method: GET
+        description: List Expense Entries
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: reportID
+          in: query
+          type: string
+          description: The unique identifier of the expense report
+          required: true
+        - name: offset
+          in: query
+          type: string
+          description: Starting page offset for pagination
+        - name: limit
+          in: query
+          type: integer
+          description: Number of records to return per page (max 100)
+      - name: createexpenseentry
+        method: POST
+        description: Create Expense Entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: expense-entries-id
+      path: /expense/entries/{id}
+      operations:
+      - name: getexpenseentry
+        method: GET
+        description: Get Expense Entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the expense entry
+          required: true
+      - name: updateexpenseentry
+        method: PUT
+        description: Update Expense Entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the expense entry
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteexpenseentry
+        method: DELETE
+        description: Delete Expense Entry
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the expense entry
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SAP_CONCUR_EXPENSE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: report-expense-entries-rest
+    port: 8080
+    description: REST adapter for SAP Concur Expense API — Expense Entries. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/expense/entries
+      name: expense-entries
+      description: REST surface for expense-entries.
+      operations:
+      - method: GET
+        name: listexpenseentries
+        description: List Expense Entries
+        call: report-expense-entries.listexpenseentries
+        with:
+          reportID: rest.reportID
+          offset: rest.offset
+          limit: rest.limit
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createexpenseentry
+        description: Create Expense Entry
+        call: report-expense-entries.createexpenseentry
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/expense/entries/{id}
+      name: expense-entries-id
+      description: REST surface for expense-entries-id.
+      operations:
+      - method: GET
+        name: getexpenseentry
+        description: Get Expense Entry
+        call: report-expense-entries.getexpenseentry
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateexpenseentry
+        description: Update Expense Entry
+        call: report-expense-entries.updateexpenseentry
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteexpenseentry
+        description: Delete Expense Entry
+        call: report-expense-entries.deleteexpenseentry
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: report-expense-entries-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SAP Concur Expense API — Expense Entries. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-expense-entries
+      description: List Expense Entries
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: report-expense-entries.listexpenseentries
+      with:
+        reportID: tools.reportID
+        offset: tools.offset
+        limit: tools.limit
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-expense-entry
+      description: Create Expense Entry
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: report-expense-entries.createexpenseentry
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-expense-entry
+      description: Get Expense Entry
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: report-expense-entries.getexpenseentry
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-expense-entry
+      description: Update Expense Entry
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: report-expense-entries.updateexpenseentry
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-expense-entry
+      description: Delete Expense Entry
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: report-expense-entries.deleteexpenseentry
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

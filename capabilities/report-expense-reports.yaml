@@ -1,0 +1,276 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SAP Concur Expense API — Expense Reports
+  description: 'SAP Concur Expense API — Expense Reports. 5 operations. Lead operation: List Expense Reports. Self-contained
+    Naftiko capability covering one Sap Concur Expense business surface.'
+  tags:
+  - Sap Concur Expense
+  - Expense Reports
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SAP_CONCUR_EXPENSE_API_KEY: SAP_CONCUR_EXPENSE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: report-expense-reports
+    baseUri: https://us.api.concursolutions.com/api/v3.0
+    description: SAP Concur Expense API — Expense Reports business capability. Self-contained, no shared references.
+    resources:
+    - name: expense-reports
+      path: /expense/reports
+      operations:
+      - name: listexpensereports
+        method: GET
+        description: List Expense Reports
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: offset
+          in: query
+          type: string
+          description: Starting page offset for pagination
+        - name: limit
+          in: query
+          type: integer
+          description: Number of records to return per page (max 100)
+        - name: approvalStatusCode
+          in: query
+          type: string
+          description: 'Filter by approval status code. Valid values: A_AAFH, A_AAPH, A_ADMIN, A_APPR, A_EXTV, A_FILE, A_NOTF,
+            A_PBDG, A_PECO, A_PEND, A_PVAL, A_RESU, A_RHLD, A_TEXP'
+        - name: paymentStatusCode
+          in: query
+          type: string
+          description: 'Filter by payment status code. Valid values: P_HOLD, P_NOTP, P_PAID, P_PAYC, P_PROC'
+        - name: modifiedDateBefore
+          in: query
+          type: string
+          description: Return reports modified before this date (ISO 8601 format)
+        - name: modifiedDateAfter
+          in: query
+          type: string
+          description: Return reports modified after this date (ISO 8601 format)
+        - name: userID
+          in: query
+          type: string
+          description: The login ID of the report owner. May only be used by company-level access token holders.
+        - name: reimbursementMethod
+          in: query
+          type: string
+          description: 'Filter by reimbursement method. Valid values: ADPPAYR, APCHECK, AVI, CNQRPAY, PMTSERV'
+      - name: createexpensereport
+        method: POST
+        description: Create Expense Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: expense-reports-id
+      path: /expense/reports/{id}
+      operations:
+      - name: getexpensereport
+        method: GET
+        description: Get Expense Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the expense report
+          required: true
+      - name: updateexpensereport
+        method: PUT
+        description: Update Expense Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the expense report
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+      - name: deleteexpensereport
+        method: DELETE
+        description: Delete Expense Report
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the expense report
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SAP_CONCUR_EXPENSE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: report-expense-reports-rest
+    port: 8080
+    description: REST adapter for SAP Concur Expense API — Expense Reports. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/expense/reports
+      name: expense-reports
+      description: REST surface for expense-reports.
+      operations:
+      - method: GET
+        name: listexpensereports
+        description: List Expense Reports
+        call: report-expense-reports.listexpensereports
+        with:
+          offset: rest.offset
+          limit: rest.limit
+          approvalStatusCode: rest.approvalStatusCode
+          paymentStatusCode: rest.paymentStatusCode
+          modifiedDateBefore: rest.modifiedDateBefore
+          modifiedDateAfter: rest.modifiedDateAfter
+          userID: rest.userID
+          reimbursementMethod: rest.reimbursementMethod
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createexpensereport
+        description: Create Expense Report
+        call: report-expense-reports.createexpensereport
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/expense/reports/{id}
+      name: expense-reports-id
+      description: REST surface for expense-reports-id.
+      operations:
+      - method: GET
+        name: getexpensereport
+        description: Get Expense Report
+        call: report-expense-reports.getexpensereport
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updateexpensereport
+        description: Update Expense Report
+        call: report-expense-reports.updateexpensereport
+        with:
+          id: rest.id
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deleteexpensereport
+        description: Delete Expense Report
+        call: report-expense-reports.deleteexpensereport
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: report-expense-reports-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SAP Concur Expense API — Expense Reports. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-expense-reports
+      description: List Expense Reports
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: report-expense-reports.listexpensereports
+      with:
+        offset: tools.offset
+        limit: tools.limit
+        approvalStatusCode: tools.approvalStatusCode
+        paymentStatusCode: tools.paymentStatusCode
+        modifiedDateBefore: tools.modifiedDateBefore
+        modifiedDateAfter: tools.modifiedDateAfter
+        userID: tools.userID
+        reimbursementMethod: tools.reimbursementMethod
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-expense-report
+      description: Create Expense Report
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: report-expense-reports.createexpensereport
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-expense-report
+      description: Get Expense Report
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: report-expense-reports.getexpensereport
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-expense-report
+      description: Update Expense Report
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: report-expense-reports.updateexpensereport
+      with:
+        id: tools.id
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: delete-expense-report
+      description: Delete Expense Report
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: report-expense-reports.deleteexpensereport
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.

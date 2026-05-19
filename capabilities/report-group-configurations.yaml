@@ -1,0 +1,133 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: SAP Concur Expense API — Group Configurations
+  description: 'SAP Concur Expense API — Group Configurations. 2 operations. Lead operation: List Expense Group Configurations.
+    Self-contained Naftiko capability covering one Sap Concur Expense business surface.'
+  tags:
+  - Sap Concur Expense
+  - Group Configurations
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SAP_CONCUR_EXPENSE_API_KEY: SAP_CONCUR_EXPENSE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: report-group-configurations
+    baseUri: https://us.api.concursolutions.com/api/v3.0
+    description: SAP Concur Expense API — Group Configurations business capability. Self-contained, no shared references.
+    resources:
+    - name: expense-expensegroupconfigurations
+      path: /expense/expensegroupconfigurations
+      operations:
+      - name: listexpensegroupconfigurations
+        method: GET
+        description: List Expense Group Configurations
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: offset
+          in: query
+          type: string
+          description: Starting page offset for pagination
+        - name: limit
+          in: query
+          type: integer
+          description: Number of records to return per page
+        - name: userID
+          in: query
+          type: string
+          description: The login ID of the user to retrieve configurations for
+    - name: expense-expensegroupconfigurations-id
+      path: /expense/expensegroupconfigurations/{id}
+      operations:
+      - name: getexpensegroupconfiguration
+        method: GET
+        description: Get Expense Group Configuration
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: id
+          in: path
+          type: string
+          description: The unique identifier of the expense group configuration
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SAP_CONCUR_EXPENSE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: report-group-configurations-rest
+    port: 8080
+    description: REST adapter for SAP Concur Expense API — Group Configurations. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/expense/expensegroupconfigurations
+      name: expense-expensegroupconfigurations
+      description: REST surface for expense-expensegroupconfigurations.
+      operations:
+      - method: GET
+        name: listexpensegroupconfigurations
+        description: List Expense Group Configurations
+        call: report-group-configurations.listexpensegroupconfigurations
+        with:
+          offset: rest.offset
+          limit: rest.limit
+          userID: rest.userID
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/expense/expensegroupconfigurations/{id}
+      name: expense-expensegroupconfigurations-id
+      description: REST surface for expense-expensegroupconfigurations-id.
+      operations:
+      - method: GET
+        name: getexpensegroupconfiguration
+        description: Get Expense Group Configuration
+        call: report-group-configurations.getexpensegroupconfiguration
+        with:
+          id: rest.id
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: report-group-configurations-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for SAP Concur Expense API — Group Configurations. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-expense-group-configurations
+      description: List Expense Group Configurations
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: report-group-configurations.listexpensegroupconfigurations
+      with:
+        offset: tools.offset
+        limit: tools.limit
+        userID: tools.userID
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-expense-group-configuration
+      description: Get Expense Group Configuration
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: report-group-configurations.getexpensegroupconfiguration
+      with:
+        id: tools.id
+      outputParameters:
+      - type: object
+        mapping: $.
