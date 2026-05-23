@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExpenseEntry",
+  "title": "ExpenseEntry",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "The unique identifier of the expense entry"
+    },
+    "ReportID": {
+      "type": "string",
+      "description": "The parent expense report ID"
+    },
+    "ExpenseTypeCode": {
+      "type": "string",
+      "description": "Expense type code (e.g., BUSML, AIRFR, HOTEL)"
+    },
+    "ExpenseTypeName": {
+      "type": "string",
+      "description": "Human-readable expense type name"
+    },
+    "TransactionDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the expense transaction"
+    },
+    "TransactionAmount": {
+      "type": "number",
+      "format": "double",
+      "description": "Amount of the transaction in transaction currency"
+    },
+    "TransactionCurrencyCode": {
+      "type": "string",
+      "description": "ISO 4217 currency code of the transaction"
+    },
+    "PostedAmount": {
+      "type": "number",
+      "format": "double",
+      "description": "Amount posted in report currency"
+    },
+    "BusinessPurpose": {
+      "type": "string",
+      "description": "Business purpose for the expense"
+    },
+    "VendorDescription": {
+      "type": "string",
+      "description": "Name of the vendor or merchant"
+    },
+    "LocationName": {
+      "type": "string",
+      "description": "Location where expense was incurred"
+    },
+    "IsItemized": {
+      "type": "boolean",
+      "description": "Whether the entry has been itemized"
+    },
+    "HasVAT": {
+      "type": "boolean",
+      "description": "Whether VAT tax applies to this entry"
+    },
+    "ReceiptImageID": {
+      "type": "string",
+      "description": "ID of the associated receipt image"
+    },
+    "URI": {
+      "type": "string",
+      "description": "URI to retrieve this resource"
+    }
+  }
+}

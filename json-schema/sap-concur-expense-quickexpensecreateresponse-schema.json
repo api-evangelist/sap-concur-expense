@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/QuickExpenseCreateResponse",
+  "title": "QuickExpenseCreateResponse",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "The unique identifier of the created quick expense"
+    },
+    "URI": {
+      "type": "string"
+    }
+  }
+}

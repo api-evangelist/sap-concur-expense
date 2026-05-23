@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExpenseReportCollection",
+  "title": "ExpenseReportCollection",
+  "type": "object",
+  "properties": {
+    "Items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ExpenseReport"
+      }
+    },
+    "NextPage": {
+      "type": "string",
+      "description": "URL to the next page of results"
+    }
+  }
+}

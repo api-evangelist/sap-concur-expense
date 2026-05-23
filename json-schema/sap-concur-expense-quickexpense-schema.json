@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/QuickExpense",
+  "title": "QuickExpense",
+  "type": "object",
+  "properties": {
+    "QuickExpenseKey": {
+      "type": "string",
+      "description": "The unique identifier of the quick expense"
+    },
+    "ExpenseTypeCode": {
+      "type": "string",
+      "description": "Expense type code"
+    },
+    "ExpenseTypeName": {
+      "type": "string",
+      "description": "Human-readable expense type name"
+    },
+    "TransactionDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the expense"
+    },
+    "TransactionAmount": {
+      "type": "number",
+      "format": "double",
+      "description": "Amount of the expense"
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "description": "ISO 4217 currency code"
+    },
+    "Comment": {
+      "type": "string",
+      "description": "Optional comment or description"
+    },
+    "VendorDescription": {
+      "type": "string",
+      "description": "Vendor or merchant name"
+    },
+    "LocationName": {
+      "type": "string",
+      "description": "Location name"
+    },
+    "ReceiptImageID": {
+      "type": "string",
+      "description": "Associated receipt image ID"
+    },
+    "OwnerLoginID": {
+      "type": "string",
+      "description": "Login ID of the expense owner"
+    },
+    "URI": {
+      "type": "string"
+    }
+  }
+}

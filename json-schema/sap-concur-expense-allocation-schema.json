@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/Allocation",
+  "title": "Allocation",
+  "type": "object",
+  "properties": {
+    "AllocationID": {
+      "type": "string",
+      "description": "The unique identifier of the allocation"
+    },
+    "EntryID": {
+      "type": "string",
+      "description": "The associated expense entry ID"
+    },
+    "Percentage": {
+      "type": "number",
+      "format": "double",
+      "description": "Percentage of the expense allocated to this cost object"
+    },
+    "Amount": {
+      "type": "number",
+      "format": "double",
+      "description": "Amount allocated in report currency"
+    },
+    "AccountCode1": {
+      "type": "string",
+      "description": "Primary GL account code"
+    },
+    "AccountCode2": {
+      "type": "string",
+      "description": "Secondary GL account code"
+    },
+    "Custom1": {
+      "type": "string",
+      "description": "Custom allocation field 1 (e.g., cost center)"
+    },
+    "Custom2": {
+      "type": "string",
+      "description": "Custom allocation field 2 (e.g., project code)"
+    },
+    "URI": {
+      "type": "string"
+    }
+  }
+}

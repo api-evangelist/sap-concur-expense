@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExpenseReport",
+  "title": "ExpenseReport",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "The unique identifier of the expense report"
+    },
+    "Name": {
+      "type": "string",
+      "description": "The name of the expense report"
+    },
+    "Total": {
+      "type": "number",
+      "format": "double",
+      "description": "Total amount of all expenses in the report"
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "description": "ISO 4217 currency code for the report total"
+    },
+    "ApprovalStatusCode": {
+      "type": "string",
+      "description": "Current approval status code"
+    },
+    "ApprovalStatusName": {
+      "type": "string",
+      "description": "Human-readable approval status name"
+    },
+    "PaymentStatusCode": {
+      "type": "string",
+      "description": "Current payment status code"
+    },
+    "PaymentStatusName": {
+      "type": "string",
+      "description": "Human-readable payment status name"
+    },
+    "SubmitDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date the report was submitted for approval"
+    },
+    "CreateDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date the report was created"
+    },
+    "ProcessingPaymentDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date payment processing began"
+    },
+    "OwnerLoginID": {
+      "type": "string",
+      "description": "Login ID of the report owner"
+    },
+    "OwnerName": {
+      "type": "string",
+      "description": "Full name of the report owner"
+    },
+    "PolicyID": {
+      "type": "string",
+      "description": "The expense policy ID applied to this report"
+    },
+    "ReportNumber": {
+      "type": "string",
+      "description": "Human-readable report number"
+    },
+    "HasException": {
+      "type": "boolean",
+      "description": "Whether the report has policy exceptions"
+    },
+    "URI": {
+      "type": "string",
+      "description": "URI to retrieve this resource"
+    }
+  }
+}

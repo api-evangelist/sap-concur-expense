@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExpenseEntryCreate",
+  "title": "ExpenseEntryCreate",
+  "type": "object",
+  "required": [
+    "ReportID",
+    "ExpenseTypeCode",
+    "TransactionDate",
+    "TransactionAmount",
+    "TransactionCurrencyCode"
+  ],
+  "properties": {
+    "ReportID": {
+      "type": "string",
+      "description": "The parent expense report ID"
+    },
+    "ExpenseTypeCode": {
+      "type": "string",
+      "description": "Expense type code"
+    },
+    "TransactionDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the expense transaction"
+    },
+    "TransactionAmount": {
+      "type": "number",
+      "format": "double",
+      "description": "Amount of the transaction"
+    },
+    "TransactionCurrencyCode": {
+      "type": "string",
+      "description": "ISO 4217 currency code"
+    },
+    "BusinessPurpose": {
+      "type": "string",
+      "description": "Business purpose for the expense"
+    },
+    "VendorDescription": {
+      "type": "string",
+      "description": "Vendor or merchant name"
+    },
+    "LocationName": {
+      "type": "string",
+      "description": "Location where expense was incurred"
+    },
+    "Comment": {
+      "type": "string",
+      "description": "Additional notes"
+    }
+  }
+}

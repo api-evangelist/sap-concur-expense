@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/QuickExpenseCreate",
+  "title": "QuickExpenseCreate",
+  "type": "object",
+  "required": [
+    "TransactionDate",
+    "TransactionAmount",
+    "CurrencyCode"
+  ],
+  "properties": {
+    "ExpenseTypeCode": {
+      "type": "string",
+      "description": "Expense type code"
+    },
+    "TransactionDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the expense"
+    },
+    "TransactionAmount": {
+      "type": "number",
+      "format": "double",
+      "description": "Amount of the expense"
+    },
+    "CurrencyCode": {
+      "type": "string",
+      "description": "ISO 4217 currency code"
+    },
+    "Comment": {
+      "type": "string",
+      "description": "Optional comment"
+    },
+    "VendorDescription": {
+      "type": "string",
+      "description": "Vendor or merchant name"
+    },
+    "LocationName": {
+      "type": "string",
+      "description": "Location of the expense"
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/QuickExpenseUpdate",
+  "title": "QuickExpenseUpdate",
+  "type": "object",
+  "properties": {
+    "ExpenseTypeCode": {
+      "type": "string"
+    },
+    "TransactionDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "TransactionAmount": {
+      "type": "number",
+      "format": "double"
+    },
+    "CurrencyCode": {
+      "type": "string"
+    },
+    "Comment": {
+      "type": "string"
+    },
+    "VendorDescription": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExpenseGroupConfigCollection",
+  "title": "ExpenseGroupConfigCollection",
+  "type": "object",
+  "properties": {
+    "Items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/ExpenseGroupConfig"
+      }
+    },
+    "NextPage": {
+      "type": "string"
+    }
+  }
+}

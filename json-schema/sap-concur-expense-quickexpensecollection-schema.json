@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/QuickExpenseCollection",
+  "title": "QuickExpenseCollection",
+  "type": "object",
+  "properties": {
+    "Items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/components/schemas/QuickExpense"
+      }
+    },
+    "NextPage": {
+      "type": "string"
+    }
+  }
+}

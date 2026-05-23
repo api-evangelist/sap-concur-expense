@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExpenseReportUpdate",
+  "title": "ExpenseReportUpdate",
+  "type": "object",
+  "properties": {
+    "Name": {
+      "type": "string",
+      "description": "Updated name for the expense report"
+    },
+    "Comment": {
+      "type": "string",
+      "description": "Updated comment"
+    },
+    "Purpose": {
+      "type": "string",
+      "description": "Updated business purpose"
+    }
+  }
+}

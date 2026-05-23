@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExpenseGroupConfig",
+  "title": "ExpenseGroupConfig",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "Expense group configuration ID"
+    },
+    "Name": {
+      "type": "string",
+      "description": "Name of the expense group"
+    },
+    "PolicyID": {
+      "type": "string",
+      "description": "Associated expense policy ID"
+    },
+    "AllowUserDigitalTaxInvoice": {
+      "type": "boolean",
+      "description": "Whether users can attach digital tax invoices"
+    },
+    "AllowUserRegisterYodlee": {
+      "type": "boolean",
+      "description": "Whether users can connect Yodlee bank feeds"
+    },
+    "AttendeeListFormID": {
+      "type": "string",
+      "description": "Form ID used for attendee lists"
+    },
+    "URI": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ExpenseReportCreate",
+  "title": "ExpenseReportCreate",
+  "type": "object",
+  "required": [
+    "Name"
+  ],
+  "properties": {
+    "Name": {
+      "type": "string",
+      "description": "The name of the expense report"
+    },
+    "Comment": {
+      "type": "string",
+      "description": "Additional comments for the report"
+    },
+    "PolicyID": {
+      "type": "string",
+      "description": "The expense policy ID to apply"
+    },
+    "Purpose": {
+      "type": "string",
+      "description": "Business purpose for the expenses"
+    },
+    "UserDefinedDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "User-defined date for the report"
+    }
+  }
+}

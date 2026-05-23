@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/PaymentBatch",
+  "title": "PaymentBatch",
+  "type": "object",
+  "properties": {
+    "BatchID": {
+      "type": "string",
+      "description": "The unique identifier of the payment batch"
+    },
+    "BatchName": {
+      "type": "string",
+      "description": "Name of the payment batch"
+    },
+    "BatchTotal": {
+      "type": "number",
+      "format": "double",
+      "description": "Total amount of the payment batch"
+    },
+    "BatchCurrencyCode": {
+      "type": "string",
+      "description": "ISO 4217 currency code for the batch total"
+    },
+    "Count": {
+      "type": "integer",
+      "description": "Number of expense reports in the batch"
+    },
+    "PaymentMethod": {
+      "type": "string",
+      "description": "Payment method used for the batch"
+    },
+    "BatchCloseDate": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Date the payment batch was closed"
+    },
+    "URI": {
+      "type": "string"
+    }
+  }
+}

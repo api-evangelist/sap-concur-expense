@@ -1,0 +1,375 @@
+{
+  "provider": "SAP Concur Expense",
+  "providerId": "sap-concur-expense",
+  "kind": "json-structure",
+  "description": "Structural overview of the SAP Concur Expense API surface; extracted from openapi/.",
+  "schemaCount": 24,
+  "operationCount": 23,
+  "schemas": [
+    {
+      "name": "ExpenseReportCollection",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ExpenseReport",
+      "type": "object",
+      "propertyCount": 17,
+      "required": []
+    },
+    {
+      "name": "ExpenseReportCreate",
+      "type": "object",
+      "propertyCount": 5,
+      "required": [
+        "Name"
+      ]
+    },
+    {
+      "name": "ExpenseReportCreateResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ExpenseReportUpdate",
+      "type": "object",
+      "propertyCount": 3,
+      "required": []
+    },
+    {
+      "name": "ExpenseEntryCollection",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ExpenseEntry",
+      "type": "object",
+      "propertyCount": 15,
+      "required": []
+    },
+    {
+      "name": "ExpenseEntryCreate",
+      "type": "object",
+      "propertyCount": 9,
+      "required": [
+        "ReportID",
+        "ExpenseTypeCode",
+        "TransactionDate",
+        "TransactionAmount",
+        "TransactionCurrencyCode"
+      ]
+    },
+    {
+      "name": "ExpenseEntryCreateResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ExpenseEntryUpdate",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "QuickExpenseCollection",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "QuickExpense",
+      "type": "object",
+      "propertyCount": 12,
+      "required": []
+    },
+    {
+      "name": "QuickExpenseCreate",
+      "type": "object",
+      "propertyCount": 7,
+      "required": [
+        "TransactionDate",
+        "TransactionAmount",
+        "CurrencyCode"
+      ]
+    },
+    {
+      "name": "QuickExpenseCreateResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "QuickExpenseUpdate",
+      "type": "object",
+      "propertyCount": 6,
+      "required": []
+    },
+    {
+      "name": "ReceiptImageCollection",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ReceiptImage",
+      "type": "object",
+      "propertyCount": 5,
+      "required": []
+    },
+    {
+      "name": "ReceiptImageCreateResponse",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "AllocationCollection",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "Allocation",
+      "type": "object",
+      "propertyCount": 9,
+      "required": []
+    },
+    {
+      "name": "ExpenseGroupConfigCollection",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "ExpenseGroupConfig",
+      "type": "object",
+      "propertyCount": 7,
+      "required": []
+    },
+    {
+      "name": "PaymentBatchCollection",
+      "type": "object",
+      "propertyCount": 2,
+      "required": []
+    },
+    {
+      "name": "PaymentBatch",
+      "type": "object",
+      "propertyCount": 8,
+      "required": []
+    }
+  ],
+  "operations": [
+    {
+      "method": "GET",
+      "path": "/expense/reports",
+      "operationId": "listExpenseReports",
+      "summary": "List Expense Reports",
+      "tags": [
+        "Expense Reports"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/expense/reports",
+      "operationId": "createExpenseReport",
+      "summary": "Create Expense Report",
+      "tags": [
+        "Expense Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/reports/{id}",
+      "operationId": "getExpenseReport",
+      "summary": "Get Expense Report",
+      "tags": [
+        "Expense Reports"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/expense/reports/{id}",
+      "operationId": "updateExpenseReport",
+      "summary": "Update Expense Report",
+      "tags": [
+        "Expense Reports"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/expense/reports/{id}",
+      "operationId": "deleteExpenseReport",
+      "summary": "Delete Expense Report",
+      "tags": [
+        "Expense Reports"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/entries",
+      "operationId": "listExpenseEntries",
+      "summary": "List Expense Entries",
+      "tags": [
+        "Expense Entries"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/expense/entries",
+      "operationId": "createExpenseEntry",
+      "summary": "Create Expense Entry",
+      "tags": [
+        "Expense Entries"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/entries/{id}",
+      "operationId": "getExpenseEntry",
+      "summary": "Get Expense Entry",
+      "tags": [
+        "Expense Entries"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/expense/entries/{id}",
+      "operationId": "updateExpenseEntry",
+      "summary": "Update Expense Entry",
+      "tags": [
+        "Expense Entries"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/expense/entries/{id}",
+      "operationId": "deleteExpenseEntry",
+      "summary": "Delete Expense Entry",
+      "tags": [
+        "Expense Entries"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/quickexpenses",
+      "operationId": "listQuickExpenses",
+      "summary": "List Quick Expenses",
+      "tags": [
+        "Quick Expenses"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/expense/quickexpenses",
+      "operationId": "createQuickExpense",
+      "summary": "Create Quick Expense",
+      "tags": [
+        "Quick Expenses"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/quickexpenses/{id}",
+      "operationId": "getQuickExpense",
+      "summary": "Get Quick Expense",
+      "tags": [
+        "Quick Expenses"
+      ]
+    },
+    {
+      "method": "PUT",
+      "path": "/expense/quickexpenses/{id}",
+      "operationId": "updateQuickExpense",
+      "summary": "Update Quick Expense",
+      "tags": [
+        "Quick Expenses"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/expense/quickexpenses/{id}",
+      "operationId": "deleteQuickExpense",
+      "summary": "Delete Quick Expense",
+      "tags": [
+        "Quick Expenses"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/receiptimages",
+      "operationId": "listReceiptImages",
+      "summary": "List Receipt Images",
+      "tags": [
+        "Receipt Images"
+      ]
+    },
+    {
+      "method": "POST",
+      "path": "/expense/receiptimages",
+      "operationId": "createReceiptImage",
+      "summary": "Upload Receipt Image",
+      "tags": [
+        "Receipt Images"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/receiptimages/{id}",
+      "operationId": "getReceiptImage",
+      "summary": "Get Receipt Image",
+      "tags": [
+        "Receipt Images"
+      ]
+    },
+    {
+      "method": "DELETE",
+      "path": "/expense/receiptimages/{id}",
+      "operationId": "deleteReceiptImage",
+      "summary": "Delete Receipt Image",
+      "tags": [
+        "Receipt Images"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/allocations",
+      "operationId": "listAllocations",
+      "summary": "List Expense Allocations",
+      "tags": [
+        "Allocations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/expensegroupconfigurations",
+      "operationId": "listExpenseGroupConfigurations",
+      "summary": "List Expense Group Configurations",
+      "tags": [
+        "Group Configurations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/expensegroupconfigurations/{id}",
+      "operationId": "getExpenseGroupConfiguration",
+      "summary": "Get Expense Group Configuration",
+      "tags": [
+        "Group Configurations"
+      ]
+    },
+    {
+      "method": "GET",
+      "path": "/expense/paymentbatches",
+      "operationId": "listPaymentBatches",
+      "summary": "List Payment Batches",
+      "tags": [
+        "Payment Batches"
+      ]
+    }
+  ]
+}

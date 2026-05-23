@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReceiptImage",
+  "title": "ReceiptImage",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "The unique identifier of the receipt image"
+    },
+    "EntryID": {
+      "type": "string",
+      "description": "The associated expense entry ID"
+    },
+    "ReceiptImageURL": {
+      "type": "string",
+      "description": "Temporary URL to access the receipt image"
+    },
+    "IsRequired": {
+      "type": "boolean",
+      "description": "Whether a receipt image is required for this entry"
+    },
+    "URI": {
+      "type": "string"
+    }
+  }
+}

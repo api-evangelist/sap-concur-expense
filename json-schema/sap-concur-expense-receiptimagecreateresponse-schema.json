@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "#/components/schemas/ReceiptImageCreateResponse",
+  "title": "ReceiptImageCreateResponse",
+  "type": "object",
+  "properties": {
+    "ID": {
+      "type": "string",
+      "description": "The unique identifier of the uploaded receipt image"
+    },
+    "URI": {
+      "type": "string"
+    }
+  }
+}
