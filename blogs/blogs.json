@@ -2,12 +2,17 @@
   "repo": "sap-concur-expense",
   "feeds": [
     {
-      "source": "https://developer.concur.com/blog/",
+      "source": "https://developer.concur.com/feed",
       "feed_url": "https://developer.concur.com/feed",
-      "title": "SAP Concur Developer Center",
-      "saved": 0
+      "title": "",
+      "saved": 0,
+      "method": "feed"
+    },
+    {
+      "source": "https://community.sap.com/topics/concur",
+      "error": "HTTPError"
     }
   ],
-  "fetched": "2026-05-17T20:20:35Z",
+  "fetched": "2026-06-01T23:35:02Z",
   "post_count": 0
 }
