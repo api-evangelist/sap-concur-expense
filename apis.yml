@@ -180,6 +180,39 @@ apis:
   - type: Support
     url: https://developer.concur.com/support
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/sap-concur-expense-attach-receipt-to-entry-workflow.yml
+    name: SAP Concur Attach Receipt to Entry
+    summary: Create an expense entry, upload a receipt image, and confirm the stored image.
+  - url: arazzo/sap-concur-expense-create-quick-expense-workflow.yml
+    name: SAP Concur Create Quick Expense
+    summary: Capture a quick expense outside of a report and read it back to confirm.
+  - url: arazzo/sap-concur-expense-create-report-add-entry-workflow.yml
+    name: SAP Concur Create Report and Add Entry
+    summary: Create a draft expense report, add an expense entry to it, then read the report back.
+  - url: arazzo/sap-concur-expense-create-report-from-policy-workflow.yml
+    name: SAP Concur Create Report From Policy
+    summary: Resolve the user's expense policy, then create a report under it and read it back.
+  - url: arazzo/sap-concur-expense-find-pending-report-detail-workflow.yml
+    name: SAP Concur Find Pending Report Detail
+    summary: List reports pending approval, then read the first one in full detail.
+  - url: arazzo/sap-concur-expense-inspect-entry-allocations-workflow.yml
+    name: SAP Concur Inspect Entry Allocations
+    summary: Read an expense entry, then list how it is split across cost objects.
+  - url: arazzo/sap-concur-expense-list-entries-get-detail-workflow.yml
+    name: SAP Concur List Entries and Get Detail
+    summary: List the entries on a report and fetch the full detail of the first one.
+  - url: arazzo/sap-concur-expense-promote-quick-expense-workflow.yml
+    name: SAP Concur Promote Quick Expense to Report
+    summary: Turn a captured quick expense into a report entry, then remove the quick expense.
+  - url: arazzo/sap-concur-expense-report-status-check-workflow.yml
+    name: SAP Concur Report Status Check
+    summary: Retrieve a report and branch on whether it has been paid or is still pending.
+  - url: arazzo/sap-concur-expense-update-report-verify-workflow.yml
+    name: SAP Concur Update Report and Verify
+    summary: Read a draft report, update its header fields, then read it back to confirm.
 - type: Developer Portal
   url: https://developer.concur.com/
 - type: GettingStarted

@@ -1,0 +1,64 @@
+arazzo: 1.0.1
+info:
+  title: SAP Concur Inspect Entry Allocations
+  summary: Read an expense entry, then list how it is split across cost objects.
+  description: >-
+    A read flow for cost accounting. It fetches an expense entry to confirm its
+    posted amount and currency, then lists the allocations attached to that
+    entry, surfacing the percentage or amount split across GL accounts, cost
+    centers, and project codes. Every step spells out its request inline so the
+    flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: sapConcurExpense
+  url: ../openapi/sap-concur-expense-report-openapi.yml
+  type: openapi
+workflows:
+- workflowId: inspect-entry-allocations
+  summary: Read an entry and list its cost-object allocations.
+  description: >-
+    Fetches an expense entry, then lists its allocations to reveal how the spend
+    is split across cost objects.
+  inputs:
+    type: object
+    required:
+    - entryID
+    properties:
+      entryID:
+        type: string
+        description: The expense entry ID to inspect.
+      limit:
+        type: integer
+        description: Maximum number of allocations to return (max 100).
+  steps:
+  - stepId: getEntry
+    description: Read the entry to confirm its posted amount before inspecting splits.
+    operationId: getExpenseEntry
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.entryID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      postedAmount: $response.body#/PostedAmount
+      reportID: $response.body#/ReportID
+  - stepId: listAllocations
+    description: List the allocations attached to the entry.
+    operationId: listAllocations
+    parameters:
+    - name: entryID
+      in: query
+      value: $inputs.entryID
+    - name: limit
+      in: query
+      value: $inputs.limit
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      allocations: $response.body#/Items
+      firstAllocationID: $response.body#/Items/0/AllocationID
+  outputs:
+    postedAmount: $steps.getEntry.outputs.postedAmount
+    allocations: $steps.listAllocations.outputs.allocations

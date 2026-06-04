@@ -1,0 +1,93 @@
+arazzo: 1.0.1
+info:
+  title: SAP Concur Attach Receipt to Entry
+  summary: Create an expense entry, upload a receipt image, and confirm the stored image.
+  description: >-
+    Documents the receipt-capture path for an expense line item. The workflow
+    creates an expense entry on an existing report, uploads a receipt image as
+    binary content, and then retrieves the stored receipt by its returned ID to
+    confirm the accessible image URL. Because the upload operation accepts the
+    image as a raw binary body rather than an entry reference, the association is
+    verified by reading the uploaded image back. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: sapConcurExpense
+  url: ../openapi/sap-concur-expense-report-openapi.yml
+  type: openapi
+workflows:
+- workflowId: attach-receipt-to-entry
+  summary: Create an expense entry and upload a receipt image for it.
+  description: >-
+    Creates an expense entry on a report, uploads a receipt image, and reads the
+    stored receipt image back to confirm its URL.
+  inputs:
+    type: object
+    required:
+    - reportID
+    - expenseTypeCode
+    - transactionDate
+    - transactionAmount
+    - transactionCurrencyCode
+    - receiptImage
+    properties:
+      reportID:
+        type: string
+        description: The existing draft report ID to add the entry to.
+      expenseTypeCode:
+        type: string
+        description: Expense type code for the entry.
+      transactionDate:
+        type: string
+        description: Date of the expense transaction (YYYY-MM-DD).
+      transactionAmount:
+        type: number
+        description: Amount of the transaction.
+      transactionCurrencyCode:
+        type: string
+        description: ISO 4217 currency code of the transaction.
+      receiptImage:
+        type: string
+        description: Base64 or binary content of the receipt image to upload.
+  steps:
+  - stepId: createEntry
+    description: Create the expense entry on the report.
+    operationId: createExpenseEntry
+    requestBody:
+      contentType: application/json
+      payload:
+        ReportID: $inputs.reportID
+        ExpenseTypeCode: $inputs.expenseTypeCode
+        TransactionDate: $inputs.transactionDate
+        TransactionAmount: $inputs.transactionAmount
+        TransactionCurrencyCode: $inputs.transactionCurrencyCode
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      entryID: $response.body#/ID
+  - stepId: uploadReceipt
+    description: Upload the receipt image as a PNG binary body.
+    operationId: createReceiptImage
+    requestBody:
+      contentType: image/png
+      payload: $inputs.receiptImage
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      receiptImageID: $response.body#/ID
+  - stepId: getReceipt
+    description: Read the uploaded receipt image back to confirm its accessible URL.
+    operationId: getReceiptImage
+    parameters:
+    - name: id
+      in: path
+      value: $steps.uploadReceipt.outputs.receiptImageID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      receiptImageURL: $response.body#/ReceiptImageURL
+  outputs:
+    entryID: $steps.createEntry.outputs.entryID
+    receiptImageID: $steps.uploadReceipt.outputs.receiptImageID
+    receiptImageURL: $steps.getReceipt.outputs.receiptImageURL

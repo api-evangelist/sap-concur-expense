@@ -1,0 +1,106 @@
+arazzo: 1.0.1
+info:
+  title: SAP Concur Create Report and Add Entry
+  summary: Create a draft expense report, add an expense entry to it, then read the report back.
+  description: >-
+    The foundational SAP Concur Expense flow. It creates a new draft expense
+    report header, adds a single expense line item (entry) to that report using
+    the returned report ID, and then retrieves the report header to confirm the
+    entry was attached and the running total updated. Every step spells out its
+    request inline so the flow can be read and executed without opening the
+    underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: sapConcurExpense
+  url: ../openapi/sap-concur-expense-report-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-report-add-entry
+  summary: Create a draft expense report and add an expense entry to it.
+  description: >-
+    Creates a report header, then creates a child expense entry referencing the
+    new report ID, and finally reads the report header back to verify the result.
+  inputs:
+    type: object
+    required:
+    - reportName
+    - expenseTypeCode
+    - transactionDate
+    - transactionAmount
+    - transactionCurrencyCode
+    properties:
+      reportName:
+        type: string
+        description: The name of the new expense report.
+      comment:
+        type: string
+        description: Optional comment for the report header.
+      policyID:
+        type: string
+        description: Optional expense policy ID to apply to the report.
+      expenseTypeCode:
+        type: string
+        description: Expense type code for the entry (e.g. BUSML, AIRFR, HOTEL).
+      transactionDate:
+        type: string
+        description: Date of the expense transaction (YYYY-MM-DD).
+      transactionAmount:
+        type: number
+        description: Amount of the transaction in the transaction currency.
+      transactionCurrencyCode:
+        type: string
+        description: ISO 4217 currency code of the transaction (e.g. USD).
+      vendorDescription:
+        type: string
+        description: Optional vendor or merchant name for the entry.
+      businessPurpose:
+        type: string
+        description: Optional business purpose for the entry.
+  steps:
+  - stepId: createReport
+    description: Create the draft expense report header.
+    operationId: createExpenseReport
+    requestBody:
+      contentType: application/json
+      payload:
+        Name: $inputs.reportName
+        Comment: $inputs.comment
+        PolicyID: $inputs.policyID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      reportID: $response.body#/ID
+      reportURI: $response.body#/URI
+  - stepId: addEntry
+    description: Add an expense entry to the newly created report.
+    operationId: createExpenseEntry
+    requestBody:
+      contentType: application/json
+      payload:
+        ReportID: $steps.createReport.outputs.reportID
+        ExpenseTypeCode: $inputs.expenseTypeCode
+        TransactionDate: $inputs.transactionDate
+        TransactionAmount: $inputs.transactionAmount
+        TransactionCurrencyCode: $inputs.transactionCurrencyCode
+        VendorDescription: $inputs.vendorDescription
+        BusinessPurpose: $inputs.businessPurpose
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      entryID: $response.body#/ID
+  - stepId: getReport
+    description: Read the report header back to confirm the entry was attached.
+    operationId: getExpenseReport
+    parameters:
+    - name: id
+      in: path
+      value: $steps.createReport.outputs.reportID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      total: $response.body#/Total
+      approvalStatusCode: $response.body#/ApprovalStatusCode
+  outputs:
+    reportID: $steps.createReport.outputs.reportID
+    entryID: $steps.addEntry.outputs.entryID
+    total: $steps.getReport.outputs.total

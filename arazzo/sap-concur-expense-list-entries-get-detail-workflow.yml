@@ -1,0 +1,66 @@
+arazzo: 1.0.1
+info:
+  title: SAP Concur List Entries and Get Detail
+  summary: List the entries on a report and fetch the full detail of the first one.
+  description: >-
+    A read flow that enumerates the expense entries belonging to a report and
+    then retrieves the complete detail of the first entry, including its
+    itemization flag, posted amount, and any associated receipt image ID. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: sapConcurExpense
+  url: ../openapi/sap-concur-expense-report-openapi.yml
+  type: openapi
+workflows:
+- workflowId: list-entries-get-detail
+  summary: List a report's entries and read the first entry in full.
+  description: >-
+    Lists the entries for a given report ID, then fetches the first returned
+    entry's complete detail.
+  inputs:
+    type: object
+    required:
+    - reportID
+    properties:
+      reportID:
+        type: string
+        description: The report ID whose entries should be listed.
+      limit:
+        type: integer
+        description: Maximum number of entries to return (max 100).
+  steps:
+  - stepId: listEntries
+    description: List the expense entries belonging to the report.
+    operationId: listExpenseEntries
+    parameters:
+    - name: reportID
+      in: query
+      value: $inputs.reportID
+    - name: limit
+      in: query
+      value: $inputs.limit
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstEntryID: $response.body#/Items/0/ID
+      entries: $response.body#/Items
+  - stepId: getEntry
+    description: Fetch the full detail of the first listed entry.
+    operationId: getExpenseEntry
+    parameters:
+    - name: id
+      in: path
+      value: $steps.listEntries.outputs.firstEntryID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      expenseTypeName: $response.body#/ExpenseTypeName
+      postedAmount: $response.body#/PostedAmount
+      receiptImageID: $response.body#/ReceiptImageID
+      isItemized: $response.body#/IsItemized
+  outputs:
+    firstEntryID: $steps.listEntries.outputs.firstEntryID
+    postedAmount: $steps.getEntry.outputs.postedAmount
+    receiptImageID: $steps.getEntry.outputs.receiptImageID

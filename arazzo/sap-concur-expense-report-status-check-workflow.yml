@@ -1,0 +1,73 @@
+arazzo: 1.0.1
+info:
+  title: SAP Concur Report Status Check
+  summary: Retrieve a report and branch on whether it has been paid or is still pending.
+  description: >-
+    A monitoring flow that reads an expense report header and inspects its
+    payment status. When the report has been paid it ends, surfacing the payment
+    processing date. When the report is not yet paid it lists open payment
+    batches so a caller can see where the report sits in the reimbursement
+    pipeline. Every step spells out its request inline so the flow can be read
+    and executed without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: sapConcurExpense
+  url: ../openapi/sap-concur-expense-report-openapi.yml
+  type: openapi
+workflows:
+- workflowId: report-status-check
+  summary: Read a report and branch on its payment status.
+  description: >-
+    Fetches a report header and, depending on its payment status code, either
+    ends or lists payment batches to locate the report in the reimbursement run.
+  inputs:
+    type: object
+    required:
+    - reportID
+    properties:
+      reportID:
+        type: string
+        description: The expense report ID to check.
+  steps:
+  - stepId: getReport
+    description: Read the report header to inspect approval and payment status.
+    operationId: getExpenseReport
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.reportID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      paymentStatusCode: $response.body#/PaymentStatusCode
+      approvalStatusCode: $response.body#/ApprovalStatusCode
+      processingPaymentDate: $response.body#/ProcessingPaymentDate
+    onSuccess:
+    - name: alreadyPaid
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.PaymentStatusCode == "P_PAID"
+        type: jsonpath
+    - name: notYetPaid
+      type: goto
+      stepId: listBatches
+      criteria:
+      - context: $response.body
+        condition: $.PaymentStatusCode != "P_PAID"
+        type: jsonpath
+  - stepId: listBatches
+    description: List payment batches to locate the report in the reimbursement pipeline.
+    operationId: listPaymentBatches
+    parameters:
+    - name: limit
+      in: query
+      value: 25
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      paymentBatches: $response.body#/PaymentBatches
+  outputs:
+    paymentStatusCode: $steps.getReport.outputs.paymentStatusCode
+    approvalStatusCode: $steps.getReport.outputs.approvalStatusCode
+    paymentBatches: $steps.listBatches.outputs.paymentBatches

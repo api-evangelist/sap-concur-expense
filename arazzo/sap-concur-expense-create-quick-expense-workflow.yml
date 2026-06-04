@@ -1,0 +1,84 @@
+arazzo: 1.0.1
+info:
+  title: SAP Concur Create Quick Expense
+  summary: Capture a quick expense outside of a report and read it back to confirm.
+  description: >-
+    Quick expenses let a user capture spend on the fly before assigning it to a
+    formal expense report. This workflow creates a quick expense record from a
+    transaction date, amount, and currency, then retrieves it by its returned ID
+    to confirm the captured values. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: sapConcurExpense
+  url: ../openapi/sap-concur-expense-report-openapi.yml
+  type: openapi
+workflows:
+- workflowId: create-quick-expense
+  summary: Create a quick expense and read it back by ID.
+  description: >-
+    Creates an unassigned quick expense record, then fetches it by the returned
+    ID to verify the captured amount and currency.
+  inputs:
+    type: object
+    required:
+    - transactionDate
+    - transactionAmount
+    - currencyCode
+    properties:
+      transactionDate:
+        type: string
+        description: Date of the expense (YYYY-MM-DD).
+      transactionAmount:
+        type: number
+        description: Amount of the expense.
+      currencyCode:
+        type: string
+        description: ISO 4217 currency code (e.g. USD).
+      expenseTypeCode:
+        type: string
+        description: Optional expense type code.
+      vendorDescription:
+        type: string
+        description: Optional vendor or merchant name.
+      locationName:
+        type: string
+        description: Optional location where the expense was incurred.
+      comment:
+        type: string
+        description: Optional comment or description.
+  steps:
+  - stepId: createQuickExpense
+    description: Create the quick expense record.
+    operationId: createQuickExpense
+    requestBody:
+      contentType: application/json
+      payload:
+        TransactionDate: $inputs.transactionDate
+        TransactionAmount: $inputs.transactionAmount
+        CurrencyCode: $inputs.currencyCode
+        ExpenseTypeCode: $inputs.expenseTypeCode
+        VendorDescription: $inputs.vendorDescription
+        LocationName: $inputs.locationName
+        Comment: $inputs.comment
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      quickExpenseID: $response.body#/ID
+  - stepId: getQuickExpense
+    description: Read the quick expense back by its ID.
+    operationId: getQuickExpense
+    parameters:
+    - name: id
+      in: path
+      value: $steps.createQuickExpense.outputs.quickExpenseID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      quickExpenseKey: $response.body#/QuickExpenseKey
+      transactionAmount: $response.body#/TransactionAmount
+      currencyCode: $response.body#/CurrencyCode
+  outputs:
+    quickExpenseID: $steps.createQuickExpense.outputs.quickExpenseID
+    transactionAmount: $steps.getQuickExpense.outputs.transactionAmount

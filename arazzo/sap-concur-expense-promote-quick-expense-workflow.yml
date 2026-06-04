@@ -1,0 +1,94 @@
+arazzo: 1.0.1
+info:
+  title: SAP Concur Promote Quick Expense to Report
+  summary: Turn a captured quick expense into a report entry, then remove the quick expense.
+  description: >-
+    Promotes an ad-hoc quick expense into a formal expense report line item.
+    The workflow reads the quick expense to recover its captured values, creates
+    a fresh expense report header, adds an entry to that report carrying the
+    quick expense amount, date, and currency, and finally deletes the now
+    redundant quick expense. Because the API exposes no single promote
+    operation, the promotion is composed from read, create, and delete steps.
+    Every step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: sapConcurExpense
+  url: ../openapi/sap-concur-expense-report-openapi.yml
+  type: openapi
+workflows:
+- workflowId: promote-quick-expense
+  summary: Promote a quick expense into a new report entry and delete the original.
+  description: >-
+    Reads a quick expense, creates a report, adds an entry from the quick
+    expense values, and deletes the quick expense.
+  inputs:
+    type: object
+    required:
+    - quickExpenseID
+    - reportName
+    - expenseTypeCode
+    properties:
+      quickExpenseID:
+        type: string
+        description: The quick expense ID to promote.
+      reportName:
+        type: string
+        description: Name for the new expense report.
+      expenseTypeCode:
+        type: string
+        description: Expense type code to assign to the promoted entry.
+  steps:
+  - stepId: getQuickExpense
+    description: Read the quick expense to recover its captured values.
+    operationId: getQuickExpense
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.quickExpenseID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      transactionDate: $response.body#/TransactionDate
+      transactionAmount: $response.body#/TransactionAmount
+      currencyCode: $response.body#/CurrencyCode
+      vendorDescription: $response.body#/VendorDescription
+  - stepId: createReport
+    description: Create the report that will hold the promoted entry.
+    operationId: createExpenseReport
+    requestBody:
+      contentType: application/json
+      payload:
+        Name: $inputs.reportName
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      reportID: $response.body#/ID
+  - stepId: createEntry
+    description: Add an entry to the report carrying the quick expense values.
+    operationId: createExpenseEntry
+    requestBody:
+      contentType: application/json
+      payload:
+        ReportID: $steps.createReport.outputs.reportID
+        ExpenseTypeCode: $inputs.expenseTypeCode
+        TransactionDate: $steps.getQuickExpense.outputs.transactionDate
+        TransactionAmount: $steps.getQuickExpense.outputs.transactionAmount
+        TransactionCurrencyCode: $steps.getQuickExpense.outputs.currencyCode
+        VendorDescription: $steps.getQuickExpense.outputs.vendorDescription
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      entryID: $response.body#/ID
+  - stepId: deleteQuickExpense
+    description: Delete the now redundant quick expense record.
+    operationId: deleteQuickExpense
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.quickExpenseID
+    successCriteria:
+    - condition: $statusCode == 204
+  outputs:
+    reportID: $steps.createReport.outputs.reportID
+    entryID: $steps.createEntry.outputs.entryID

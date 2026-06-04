@@ -1,0 +1,81 @@
+arazzo: 1.0.1
+info:
+  title: SAP Concur Update Report and Verify
+  summary: Read a draft report, update its header fields, then read it back to confirm.
+  description: >-
+    Safely edits an expense report header. The workflow first reads the report
+    to confirm it is still a draft, then applies the supplied name, comment, and
+    purpose changes, and finally re-reads the report to confirm the new values
+    were persisted. Because the update operation returns no content, the final
+    read is what surfaces the applied changes. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: sapConcurExpense
+  url: ../openapi/sap-concur-expense-report-openapi.yml
+  type: openapi
+workflows:
+- workflowId: update-report-verify
+  summary: Read, update, and re-read an expense report header.
+  description: >-
+    Reads the report header, applies header edits, and reads it back to confirm
+    the changes were saved.
+  inputs:
+    type: object
+    required:
+    - reportID
+    properties:
+      reportID:
+        type: string
+        description: The expense report ID to update.
+      name:
+        type: string
+        description: Updated report name.
+      comment:
+        type: string
+        description: Updated comment.
+      purpose:
+        type: string
+        description: Updated business purpose.
+  steps:
+  - stepId: getBefore
+    description: Read the report header to confirm it exists before editing.
+    operationId: getExpenseReport
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.reportID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      approvalStatusCode: $response.body#/ApprovalStatusCode
+  - stepId: updateReport
+    description: Apply the supplied header edits to the report.
+    operationId: updateExpenseReport
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.reportID
+    requestBody:
+      contentType: application/json
+      payload:
+        Name: $inputs.name
+        Comment: $inputs.comment
+        Purpose: $inputs.purpose
+    successCriteria:
+    - condition: $statusCode == 204
+  - stepId: getAfter
+    description: Re-read the report header to confirm the edits were saved.
+    operationId: getExpenseReport
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.reportID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      name: $response.body#/Name
+  outputs:
+    reportID: $inputs.reportID
+    updatedName: $steps.getAfter.outputs.name

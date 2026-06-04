@@ -1,0 +1,81 @@
+arazzo: 1.0.1
+info:
+  title: SAP Concur Find Pending Report Detail
+  summary: List reports pending approval, then read the first one in full detail.
+  description: >-
+    A triage flow for approvers and finance reviewers. It lists expense reports
+    filtered to a pending approval status, then reads the first matching report
+    in full to surface its owner, total, and exception flag. Every step spells
+    out its request inline so the flow can be read and executed without opening
+    the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: sapConcurExpense
+  url: ../openapi/sap-concur-expense-report-openapi.yml
+  type: openapi
+workflows:
+- workflowId: find-pending-report-detail
+  summary: List pending-approval reports and read the first in detail.
+  description: >-
+    Lists reports filtered by an approval status code and fetches the first
+    returned report's full header.
+  inputs:
+    type: object
+    required:
+    - approvalStatusCode
+    properties:
+      approvalStatusCode:
+        type: string
+        description: >-
+          Approval status code to filter on (e.g. A_PEND for pending approval,
+          A_APPR for approved).
+      limit:
+        type: integer
+        description: Maximum number of reports to return (max 100).
+  steps:
+  - stepId: listReports
+    description: List reports filtered by the supplied approval status code.
+    operationId: listExpenseReports
+    parameters:
+    - name: approvalStatusCode
+      in: query
+      value: $inputs.approvalStatusCode
+    - name: limit
+      in: query
+      value: $inputs.limit
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      firstReportID: $response.body#/Items/0/ID
+      reports: $response.body#/Items
+    onSuccess:
+    - name: hasReports
+      type: goto
+      stepId: getReport
+      criteria:
+      - context: $response.body
+        condition: $.Items.length > 0
+        type: jsonpath
+    - name: noReports
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.Items.length == 0
+        type: jsonpath
+  - stepId: getReport
+    description: Read the first matching report's full header.
+    operationId: getExpenseReport
+    parameters:
+    - name: id
+      in: path
+      value: $steps.listReports.outputs.firstReportID
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      ownerName: $response.body#/OwnerName
+      total: $response.body#/Total
+      hasException: $response.body#/HasException
+  outputs:
+    firstReportID: $steps.listReports.outputs.firstReportID
+    total: $steps.getReport.outputs.total
+    hasException: $steps.getReport.outputs.hasException
