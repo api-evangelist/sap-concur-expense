@@ -1,0 +1,627 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SAP Concur Expense API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://us.api.concursolutions.com/oauth2/v0/authorize",
+      "accessTokenUrl": "https://us.api.concursolutions.com/oauth2/v0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Expense Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Expense Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              },
+              {
+                "name": "approvalStatusCode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by approval status code. Valid values: A_AAFH, A_AAPH, A_ADMIN, A_APPR, A_EXTV, A_FILE, A_NOTF, A_PBDG, A_PECO, A_PEND, A_PVAL, A_RESU, A_RHLD, A_TEXP"
+              },
+              {
+                "name": "paymentStatusCode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment status code. Valid values: P_HOLD, P_NOTP, P_PAID, P_PAYC, P_PROC"
+              },
+              {
+                "name": "modifiedDateBefore",
+                "value": "",
+                "type": "query",
+                "description": "Return reports modified before this date (ISO 8601 format)"
+              },
+              {
+                "name": "modifiedDateAfter",
+                "value": "",
+                "type": "query",
+                "description": "Return reports modified after this date (ISO 8601 format)"
+              },
+              {
+                "name": "userID",
+                "value": "",
+                "type": "query",
+                "description": "The login ID of the report owner. May only be used by company-level access token holders."
+              },
+              {
+                "name": "reimbursementMethod",
+                "value": "",
+                "type": "query",
+                "description": "Filter by reimbursement method. Valid values: ADPPAYR, APCHECK, AVI, CNQRPAY, PMTSERV"
+              }
+            ]
+          },
+          "docs": "Returns a collection of expense reports belonging to the current user or accessible via company-level access. Supports filtering by approval status, submission date, payment status, and reimbursement method."
+        },
+        {
+          "info": {
+            "name": "Create Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new expense report header. After creating the report header, expense entries can be added using the expense entries endpoint."
+        },
+        {
+          "info": {
+            "name": "Get Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense report"
+              }
+            ]
+          },
+          "docs": "Returns a single expense report by its ID. Includes report header information such as approval status, totals, and submission date."
+        },
+        {
+          "info": {
+            "name": "Update Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense report"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing expense report header. Only draft reports (not yet submitted) can be updated."
+        },
+        {
+          "info": {
+            "name": "Delete Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense report"
+              }
+            ]
+          },
+          "docs": "Deletes an expense report. Only draft reports that have never been submitted can be deleted."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Expense Entries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Expense Entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries",
+            "params": [
+              {
+                "name": "reportID",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the expense report"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns a collection of expense entries for the specified report ID. Each entry represents a single expense line item with amount, date, category, and supporting details."
+        },
+        {
+          "info": {
+            "name": "Create Expense Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new expense entry within an expense report. The report must exist and be in draft state. The entry requires an expense type code, transaction date, and transaction amount."
+        },
+        {
+          "info": {
+            "name": "Get Expense Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense entry"
+              }
+            ]
+          },
+          "docs": "Returns a single expense entry by its ID, including all form field values, itemizations, and attendee information."
+        },
+        {
+          "info": {
+            "name": "Update Expense Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense entry"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing expense entry. Only entries in draft reports can be modified."
+        },
+        {
+          "info": {
+            "name": "Delete Expense Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense entry"
+              }
+            ]
+          },
+          "docs": "Deletes an expense entry from a draft expense report."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Quick Expenses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Quick Expenses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              },
+              {
+                "name": "modifiedDateBefore",
+                "value": "",
+                "type": "query",
+                "description": "Return quick expenses modified before this date"
+              },
+              {
+                "name": "modifiedDateAfter",
+                "value": "",
+                "type": "query",
+                "description": "Return quick expenses modified after this date"
+              }
+            ]
+          },
+          "docs": "Returns quick expenses for the current user. Quick expenses are unassigned expense records captured before being added to an expense report."
+        },
+        {
+          "info": {
+            "name": "Create Quick Expense",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new quick expense record. Quick expenses can be created without an associated expense report and promoted to a full report entry later."
+        },
+        {
+          "info": {
+            "name": "Get Quick Expense",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the quick expense"
+              }
+            ]
+          },
+          "docs": "Returns a single quick expense by its ID."
+        },
+        {
+          "info": {
+            "name": "Update Quick Expense",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the quick expense"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing quick expense record."
+        },
+        {
+          "info": {
+            "name": "Delete Quick Expense",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the quick expense"
+              }
+            ]
+          },
+          "docs": "Deletes a quick expense record."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Receipt Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Receipt Images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/receiptimages",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              },
+              {
+                "name": "entryID",
+                "value": "",
+                "type": "query",
+                "description": "Filter receipt images by expense entry ID"
+              }
+            ]
+          },
+          "docs": "Returns a collection of receipt images associated with expense entries for the current user."
+        },
+        {
+          "info": {
+            "name": "Upload Receipt Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/receiptimages"
+          },
+          "docs": "Uploads a new receipt image. The image can be in PNG, JPG, PDF, or TIFF format and will be associated with an expense entry."
+        },
+        {
+          "info": {
+            "name": "Get Receipt Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/receiptimages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the receipt image"
+              }
+            ]
+          },
+          "docs": "Returns the receipt image URL for the specified image ID."
+        },
+        {
+          "info": {
+            "name": "Delete Receipt Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/receiptimages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the receipt image"
+              }
+            ]
+          },
+          "docs": "Deletes a receipt image by its ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Allocations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Expense Allocations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/allocations",
+            "params": [
+              {
+                "name": "entryID",
+                "value": "",
+                "type": "query",
+                "description": "The expense entry ID to retrieve allocations for"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns expense allocations for the specified entry ID. Allocations split an expense across multiple cost centers, projects, or GL accounts."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Group Configurations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Expense Group Configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/expensegroupconfigurations",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page"
+              },
+              {
+                "name": "userID",
+                "value": "",
+                "type": "query",
+                "description": "The login ID of the user to retrieve configurations for"
+              }
+            ]
+          },
+          "docs": "Returns expense group policy configurations for the current user. Configurations define available expense types, payment types, allowable business purposes, and workflow approval rules."
+        },
+        {
+          "info": {
+            "name": "Get Expense Group Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/expensegroupconfigurations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense group configuration"
+              }
+            ]
+          },
+          "docs": "Returns a single expense group configuration by its ID."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Payment Batches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Payment Batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/paymentbatches",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page"
+              },
+              {
+                "name": "batchID",
+                "value": "",
+                "type": "query",
+                "description": "Filter by specific payment batch ID"
+              }
+            ]
+          },
+          "docs": "Returns payment batches for approved expense reports ready for reimbursement. Payment batches group multiple expense reports into a single payment run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
