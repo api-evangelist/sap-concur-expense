@@ -1,0 +1,18 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/sap-concur-expense-report-openapi.yml
+summary:
+  types:
+  - oauth2
+  oauth2_flows:
+  - authorizationCode
+schemes:
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://us.api.concursolutions.com/oauth2/v0/authorize
+    tokenUrl: https://us.api.concursolutions.com/oauth2/v0/token
+    scopes: 3
+  sources:
+  - openapi/sap-concur-expense-report-openapi.yml
