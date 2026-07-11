@@ -180,6 +180,10 @@ apis:
       - type: Support
         url: https://developer.concur.com/support
 common:
+  - type: Authentication
+    url: authentication/sap-concur-expense-authentication.yml
+  - type: OAuthScopes
+    url: scopes/sap-concur-expense-scopes.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/sap-concur-expense/overview
   - type: Arazzo

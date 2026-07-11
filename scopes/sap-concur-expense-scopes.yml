@@ -1,0 +1,29 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/sap-concur-expense-report-openapi.yml
+schemes:
+- name: OAuth2
+  source: openapi/sap-concur-expense-report-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://us.api.concursolutions.com/oauth2/v0/authorize
+    tokenUrl: https://us.api.concursolutions.com/oauth2/v0/token
+scopes:
+- scope: expense.report.delete
+  description: Delete expense reports
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/sap-concur-expense-report-openapi.yml
+- scope: expense.report.read
+  description: Read expense reports
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/sap-concur-expense-report-openapi.yml
+- scope: expense.report.write
+  description: Create and modify expense reports
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/sap-concur-expense-report-openapi.yml
