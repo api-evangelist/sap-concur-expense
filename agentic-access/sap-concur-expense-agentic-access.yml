@@ -1,0 +1,381 @@
+generated: '2026-07-15'
+method: generated
+source: openapi/sap-concur-expense-report-openapi.yml
+description: Recommended x-agentic-access execution contracts, classified heuristically from
+  the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
+  audience per deployment. See research/curity/agentic-governance/.
+summary:
+  operations: 23
+  by_action_class:
+    connected: 12
+    acting: 11
+  by_consequence:
+    read: 12
+    write: 11
+  human_in_the_loop_required: 0
+operations:
+- path: /expense/reports
+  method: get
+  operationId: listExpenseReports
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/reports
+  method: post
+  operationId: createExpenseReport
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/reports/{id}
+  method: get
+  operationId: getExpenseReport
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/reports/{id}
+  method: put
+  operationId: updateExpenseReport
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/reports/{id}
+  method: delete
+  operationId: deleteExpenseReport
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/entries
+  method: get
+  operationId: listExpenseEntries
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/entries
+  method: post
+  operationId: createExpenseEntry
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/entries/{id}
+  method: get
+  operationId: getExpenseEntry
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/entries/{id}
+  method: put
+  operationId: updateExpenseEntry
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/entries/{id}
+  method: delete
+  operationId: deleteExpenseEntry
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/quickexpenses
+  method: get
+  operationId: listQuickExpenses
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/quickexpenses
+  method: post
+  operationId: createQuickExpense
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/quickexpenses/{id}
+  method: get
+  operationId: getQuickExpense
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/quickexpenses/{id}
+  method: put
+  operationId: updateQuickExpense
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/quickexpenses/{id}
+  method: delete
+  operationId: deleteQuickExpense
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/receiptimages
+  method: get
+  operationId: listReceiptImages
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/receiptimages
+  method: post
+  operationId: createReceiptImage
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/receiptimages/{id}
+  method: get
+  operationId: getReceiptImage
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/receiptimages/{id}
+  method: delete
+  operationId: deleteReceiptImage
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/allocations
+  method: get
+  operationId: listAllocations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/expensegroupconfigurations
+  method: get
+  operationId: listExpenseGroupConfigurations
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/expensegroupconfigurations/{id}
+  method: get
+  operationId: getExpenseGroupConfiguration
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write
+- path: /expense/paymentbatches
+  method: get
+  operationId: listPaymentBatches
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - expense.report.read
+    - expense.report.write

@@ -180,6 +180,8 @@ apis:
       - type: Support
         url: https://developer.concur.com/support
 common:
+  - type: AgenticAccess
+    url: agentic-access/sap-concur-expense-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/sap-concur-expense-vulnerability-disclosure.yml
   - type: DomainSecurity
