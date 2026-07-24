@@ -1,0 +1,136 @@
+openapi: 3.1.0
+info:
+  title: SAP Concur Expense Allocations Group Configurations API
+  description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
+  version: '3.0'
+  contact:
+    name: SAP Concur Developer Support
+    url: https://developer.concur.com/support
+  termsOfService: https://developer.concur.com/terms-of-use
+servers:
+- url: https://us.api.concursolutions.com/api/v3.0
+  description: United States Production
+- url: https://eu.api.concursolutions.com/api/v3.0
+  description: Europe Production
+- url: https://cn.api.concursolutions.com/api/v3.0
+  description: China Production
+security:
+- OAuth2:
+  - expense.report.read
+  - expense.report.write
+tags:
+- name: Group Configurations
+  description: Retrieve expense group policy configurations including expense types, payment types, and workflow settings.
+paths:
+  /expense/expensegroupconfigurations:
+    get:
+      operationId: listExpenseGroupConfigurations
+      summary: List Expense Group Configurations
+      description: Returns expense group policy configurations for the current user. Configurations define available expense types, payment types, allowable business purposes, and workflow approval rules.
+      tags:
+      - Group Configurations
+      parameters:
+      - name: offset
+        in: query
+        description: Starting page offset for pagination
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of records to return per page
+        required: false
+        schema:
+          type: integer
+      - name: userID
+        in: query
+        description: The login ID of the user to retrieve configurations for
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success - Returns expense group configurations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseGroupConfigCollection'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /expense/expensegroupconfigurations/{id}:
+    get:
+      operationId: getExpenseGroupConfiguration
+      summary: Get Expense Group Configuration
+      description: Returns a single expense group configuration by its ID.
+      tags:
+      - Group Configurations
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the expense group configuration
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success - Returns the expense group configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseGroupConfig'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    ExpenseGroupConfig:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: Expense group configuration ID
+        Name:
+          type: string
+          description: Name of the expense group
+        PolicyID:
+          type: string
+          description: Associated expense policy ID
+        AllowUserDigitalTaxInvoice:
+          type: boolean
+          description: Whether users can attach digital tax invoices
+        AllowUserRegisterYodlee:
+          type: boolean
+          description: Whether users can connect Yodlee bank feeds
+        AttendeeListFormID:
+          type: string
+          description: Form ID used for attendee lists
+        URI:
+          type: string
+    ExpenseGroupConfigCollection:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseGroupConfig'
+        NextPage:
+          type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://us.api.concursolutions.com/oauth2/v0/authorize
+          tokenUrl: https://us.api.concursolutions.com/oauth2/v0/token
+          scopes:
+            expense.report.read: Read expense reports
+            expense.report.write: Create and modify expense reports
+            expense.report.delete: Delete expense reports
+externalDocs:
+  description: SAP Concur Expense API Reference
+  url: https://developer.concur.com/api-reference/expense/

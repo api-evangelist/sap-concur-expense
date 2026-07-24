@@ -1,0 +1,319 @@
+openapi: 3.1.0
+info:
+  title: SAP Concur Expense Allocations Expense Entries API
+  description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
+  version: '3.0'
+  contact:
+    name: SAP Concur Developer Support
+    url: https://developer.concur.com/support
+  termsOfService: https://developer.concur.com/terms-of-use
+servers:
+- url: https://us.api.concursolutions.com/api/v3.0
+  description: United States Production
+- url: https://eu.api.concursolutions.com/api/v3.0
+  description: Europe Production
+- url: https://cn.api.concursolutions.com/api/v3.0
+  description: China Production
+security:
+- OAuth2:
+  - expense.report.read
+  - expense.report.write
+tags:
+- name: Expense Entries
+  description: Manage individual expense line items within expense reports including itemizations, attendees, and custom fields.
+paths:
+  /expense/entries:
+    get:
+      operationId: listExpenseEntries
+      summary: List Expense Entries
+      description: Returns a collection of expense entries for the specified report ID. Each entry represents a single expense line item with amount, date, category, and supporting details.
+      tags:
+      - Expense Entries
+      parameters:
+      - name: reportID
+        in: query
+        description: The unique identifier of the expense report
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: Starting page offset for pagination
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of records to return per page (max 100)
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+      responses:
+        '200':
+          description: Success - Returns list of expense entries
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseEntryCollection'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    post:
+      operationId: createExpenseEntry
+      summary: Create Expense Entry
+      description: Creates a new expense entry within an expense report. The report must exist and be in draft state. The entry requires an expense type code, transaction date, and transaction amount.
+      tags:
+      - Expense Entries
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseEntryCreate'
+      responses:
+        '200':
+          description: Success - Returns the created entry ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseEntryCreateResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /expense/entries/{id}:
+    get:
+      operationId: getExpenseEntry
+      summary: Get Expense Entry
+      description: Returns a single expense entry by its ID, including all form field values, itemizations, and attendee information.
+      tags:
+      - Expense Entries
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the expense entry
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success - Returns the expense entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExpenseEntry'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    put:
+      operationId: updateExpenseEntry
+      summary: Update Expense Entry
+      description: Updates an existing expense entry. Only entries in draft reports can be modified.
+      tags:
+      - Expense Entries
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the expense entry
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ExpenseEntryUpdate'
+      responses:
+        '204':
+          description: Success - No content returned
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      operationId: deleteExpenseEntry
+      summary: Delete Expense Entry
+      description: Deletes an expense entry from a draft expense report.
+      tags:
+      - Expense Entries
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the expense entry
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Success - No content returned
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    ExpenseEntryCreate:
+      type: object
+      required:
+      - ReportID
+      - ExpenseTypeCode
+      - TransactionDate
+      - TransactionAmount
+      - TransactionCurrencyCode
+      properties:
+        ReportID:
+          type: string
+          description: The parent expense report ID
+        ExpenseTypeCode:
+          type: string
+          description: Expense type code
+        TransactionDate:
+          type: string
+          format: date
+          description: Date of the expense transaction
+        TransactionAmount:
+          type: number
+          format: double
+          description: Amount of the transaction
+        TransactionCurrencyCode:
+          type: string
+          description: ISO 4217 currency code
+        BusinessPurpose:
+          type: string
+          description: Business purpose for the expense
+        VendorDescription:
+          type: string
+          description: Vendor or merchant name
+        LocationName:
+          type: string
+          description: Location where expense was incurred
+        Comment:
+          type: string
+          description: Additional notes
+    ExpenseEntryCollection:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseEntry'
+        NextPage:
+          type: string
+          description: URL to the next page of results
+    ExpenseEntry:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the expense entry
+        ReportID:
+          type: string
+          description: The parent expense report ID
+        ExpenseTypeCode:
+          type: string
+          description: Expense type code (e.g., BUSML, AIRFR, HOTEL)
+        ExpenseTypeName:
+          type: string
+          description: Human-readable expense type name
+        TransactionDate:
+          type: string
+          format: date
+          description: Date of the expense transaction
+        TransactionAmount:
+          type: number
+          format: double
+          description: Amount of the transaction in transaction currency
+        TransactionCurrencyCode:
+          type: string
+          description: ISO 4217 currency code of the transaction
+        PostedAmount:
+          type: number
+          format: double
+          description: Amount posted in report currency
+        BusinessPurpose:
+          type: string
+          description: Business purpose for the expense
+        VendorDescription:
+          type: string
+          description: Name of the vendor or merchant
+        LocationName:
+          type: string
+          description: Location where expense was incurred
+        IsItemized:
+          type: boolean
+          description: Whether the entry has been itemized
+        HasVAT:
+          type: boolean
+          description: Whether VAT tax applies to this entry
+        ReceiptImageID:
+          type: string
+          description: ID of the associated receipt image
+        URI:
+          type: string
+          description: URI to retrieve this resource
+    ExpenseEntryUpdate:
+      type: object
+      properties:
+        ExpenseTypeCode:
+          type: string
+          description: Updated expense type code
+        TransactionDate:
+          type: string
+          format: date
+          description: Updated transaction date
+        TransactionAmount:
+          type: number
+          format: double
+          description: Updated transaction amount
+        BusinessPurpose:
+          type: string
+          description: Updated business purpose
+        VendorDescription:
+          type: string
+          description: Updated vendor description
+        Comment:
+          type: string
+          description: Updated comment
+    ExpenseEntryCreateResponse:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the created expense entry
+        URI:
+          type: string
+          description: URI of the created resource
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://us.api.concursolutions.com/oauth2/v0/authorize
+          tokenUrl: https://us.api.concursolutions.com/oauth2/v0/token
+          scopes:
+            expense.report.read: Read expense reports
+            expense.report.write: Create and modify expense reports
+            expense.report.delete: Delete expense reports
+externalDocs:
+  description: SAP Concur Expense API Reference
+  url: https://developer.concur.com/api-reference/expense/

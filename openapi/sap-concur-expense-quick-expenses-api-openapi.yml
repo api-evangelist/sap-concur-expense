@@ -1,0 +1,296 @@
+openapi: 3.1.0
+info:
+  title: SAP Concur Expense Allocations Quick Expenses API
+  description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
+  version: '3.0'
+  contact:
+    name: SAP Concur Developer Support
+    url: https://developer.concur.com/support
+  termsOfService: https://developer.concur.com/terms-of-use
+servers:
+- url: https://us.api.concursolutions.com/api/v3.0
+  description: United States Production
+- url: https://eu.api.concursolutions.com/api/v3.0
+  description: Europe Production
+- url: https://cn.api.concursolutions.com/api/v3.0
+  description: China Production
+security:
+- OAuth2:
+  - expense.report.read
+  - expense.report.write
+tags:
+- name: Quick Expenses
+  description: Create and manage quick expenses captured outside of a formal report. Quick expenses can be promoted to full expense report entries.
+paths:
+  /expense/quickexpenses:
+    get:
+      operationId: listQuickExpenses
+      summary: List Quick Expenses
+      description: Returns quick expenses for the current user. Quick expenses are unassigned expense records captured before being added to an expense report.
+      tags:
+      - Quick Expenses
+      parameters:
+      - name: offset
+        in: query
+        description: Starting page offset for pagination
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of records to return per page (max 100)
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+      - name: modifiedDateBefore
+        in: query
+        description: Return quick expenses modified before this date
+        required: false
+        schema:
+          type: string
+          format: date-time
+      - name: modifiedDateAfter
+        in: query
+        description: Return quick expenses modified after this date
+        required: false
+        schema:
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: Success - Returns list of quick expenses
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuickExpenseCollection'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+    post:
+      operationId: createQuickExpense
+      summary: Create Quick Expense
+      description: Creates a new quick expense record. Quick expenses can be created without an associated expense report and promoted to a full report entry later.
+      tags:
+      - Quick Expenses
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuickExpenseCreate'
+      responses:
+        '200':
+          description: Success - Returns the created quick expense ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuickExpenseCreateResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /expense/quickexpenses/{id}:
+    get:
+      operationId: getQuickExpense
+      summary: Get Quick Expense
+      description: Returns a single quick expense by its ID.
+      tags:
+      - Quick Expenses
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the quick expense
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success - Returns the quick expense
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QuickExpense'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    put:
+      operationId: updateQuickExpense
+      summary: Update Quick Expense
+      description: Updates an existing quick expense record.
+      tags:
+      - Quick Expenses
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the quick expense
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QuickExpenseUpdate'
+      responses:
+        '204':
+          description: Success - No content returned
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+    delete:
+      operationId: deleteQuickExpense
+      summary: Delete Quick Expense
+      description: Deletes a quick expense record.
+      tags:
+      - Quick Expenses
+      parameters:
+      - name: id
+        in: path
+        description: The unique identifier of the quick expense
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Success - No content returned
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    QuickExpenseCollection:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/QuickExpense'
+        NextPage:
+          type: string
+    QuickExpenseUpdate:
+      type: object
+      properties:
+        ExpenseTypeCode:
+          type: string
+        TransactionDate:
+          type: string
+          format: date
+        TransactionAmount:
+          type: number
+          format: double
+        CurrencyCode:
+          type: string
+        Comment:
+          type: string
+        VendorDescription:
+          type: string
+    QuickExpense:
+      type: object
+      properties:
+        QuickExpenseKey:
+          type: string
+          description: The unique identifier of the quick expense
+        ExpenseTypeCode:
+          type: string
+          description: Expense type code
+        ExpenseTypeName:
+          type: string
+          description: Human-readable expense type name
+        TransactionDate:
+          type: string
+          format: date
+          description: Date of the expense
+        TransactionAmount:
+          type: number
+          format: double
+          description: Amount of the expense
+        CurrencyCode:
+          type: string
+          description: ISO 4217 currency code
+        Comment:
+          type: string
+          description: Optional comment or description
+        VendorDescription:
+          type: string
+          description: Vendor or merchant name
+        LocationName:
+          type: string
+          description: Location name
+        ReceiptImageID:
+          type: string
+          description: Associated receipt image ID
+        OwnerLoginID:
+          type: string
+          description: Login ID of the expense owner
+        URI:
+          type: string
+    QuickExpenseCreateResponse:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the created quick expense
+        URI:
+          type: string
+    QuickExpenseCreate:
+      type: object
+      required:
+      - TransactionDate
+      - TransactionAmount
+      - CurrencyCode
+      properties:
+        ExpenseTypeCode:
+          type: string
+          description: Expense type code
+        TransactionDate:
+          type: string
+          format: date
+          description: Date of the expense
+        TransactionAmount:
+          type: number
+          format: double
+          description: Amount of the expense
+        CurrencyCode:
+          type: string
+          description: ISO 4217 currency code
+        Comment:
+          type: string
+          description: Optional comment
+        VendorDescription:
+          type: string
+          description: Vendor or merchant name
+        LocationName:
+          type: string
+          description: Location of the expense
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://us.api.concursolutions.com/oauth2/v0/authorize
+          tokenUrl: https://us.api.concursolutions.com/oauth2/v0/token
+          scopes:
+            expense.report.read: Read expense reports
+            expense.report.write: Create and modify expense reports
+            expense.report.delete: Delete expense reports
+externalDocs:
+  description: SAP Concur Expense API Reference
+  url: https://developer.concur.com/api-reference/expense/

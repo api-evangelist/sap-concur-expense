@@ -1,0 +1,120 @@
+openapi: 3.1.0
+info:
+  title: SAP Concur Expense Allocations API
+  description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
+  version: '3.0'
+  contact:
+    name: SAP Concur Developer Support
+    url: https://developer.concur.com/support
+  termsOfService: https://developer.concur.com/terms-of-use
+servers:
+- url: https://us.api.concursolutions.com/api/v3.0
+  description: United States Production
+- url: https://eu.api.concursolutions.com/api/v3.0
+  description: Europe Production
+- url: https://cn.api.concursolutions.com/api/v3.0
+  description: China Production
+security:
+- OAuth2:
+  - expense.report.read
+  - expense.report.write
+tags:
+- name: Allocations
+  description: Manage cost center, project, or GL account allocations for expense entries. Supports percentage-based and amount-based splits.
+paths:
+  /expense/allocations:
+    get:
+      operationId: listAllocations
+      summary: List Expense Allocations
+      description: Returns expense allocations for the specified entry ID. Allocations split an expense across multiple cost centers, projects, or GL accounts.
+      tags:
+      - Allocations
+      parameters:
+      - name: entryID
+        in: query
+        description: The expense entry ID to retrieve allocations for
+        required: true
+        schema:
+          type: string
+      - name: offset
+        in: query
+        description: Starting page offset for pagination
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of records to return per page (max 100)
+        required: false
+        schema:
+          type: integer
+          maximum: 100
+      responses:
+        '200':
+          description: Success - Returns list of allocations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AllocationCollection'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    AllocationCollection:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Allocation'
+        NextPage:
+          type: string
+    Allocation:
+      type: object
+      properties:
+        AllocationID:
+          type: string
+          description: The unique identifier of the allocation
+        EntryID:
+          type: string
+          description: The associated expense entry ID
+        Percentage:
+          type: number
+          format: double
+          description: Percentage of the expense allocated to this cost object
+        Amount:
+          type: number
+          format: double
+          description: Amount allocated in report currency
+        AccountCode1:
+          type: string
+          description: Primary GL account code
+        AccountCode2:
+          type: string
+          description: Secondary GL account code
+        Custom1:
+          type: string
+          description: Custom allocation field 1 (e.g., cost center)
+        Custom2:
+          type: string
+          description: Custom allocation field 2 (e.g., project code)
+        URI:
+          type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://us.api.concursolutions.com/oauth2/v0/authorize
+          tokenUrl: https://us.api.concursolutions.com/oauth2/v0/token
+          scopes:
+            expense.report.read: Read expense reports
+            expense.report.write: Create and modify expense reports
+            expense.report.delete: Delete expense reports
+externalDocs:
+  description: SAP Concur Expense API Reference
+  url: https://developer.concur.com/api-reference/expense/

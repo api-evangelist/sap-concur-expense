@@ -1,0 +1,114 @@
+openapi: 3.1.0
+info:
+  title: SAP Concur Expense Allocations Payment Batches API
+  description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
+  version: '3.0'
+  contact:
+    name: SAP Concur Developer Support
+    url: https://developer.concur.com/support
+  termsOfService: https://developer.concur.com/terms-of-use
+servers:
+- url: https://us.api.concursolutions.com/api/v3.0
+  description: United States Production
+- url: https://eu.api.concursolutions.com/api/v3.0
+  description: Europe Production
+- url: https://cn.api.concursolutions.com/api/v3.0
+  description: China Production
+security:
+- OAuth2:
+  - expense.report.read
+  - expense.report.write
+tags:
+- name: Payment Batches
+  description: Retrieve payment batch information for approved expense reports ready for reimbursement processing.
+paths:
+  /expense/paymentbatches:
+    get:
+      operationId: listPaymentBatches
+      summary: List Payment Batches
+      description: Returns payment batches for approved expense reports ready for reimbursement. Payment batches group multiple expense reports into a single payment run.
+      tags:
+      - Payment Batches
+      parameters:
+      - name: offset
+        in: query
+        description: Starting page offset for pagination
+        required: false
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: Number of records to return per page
+        required: false
+        schema:
+          type: integer
+      - name: batchID
+        in: query
+        description: Filter by specific payment batch ID
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success - Returns list of payment batches
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaymentBatchCollection'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+components:
+  schemas:
+    PaymentBatchCollection:
+      type: object
+      properties:
+        PaymentBatches:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentBatch'
+        NextPage:
+          type: string
+    PaymentBatch:
+      type: object
+      properties:
+        BatchID:
+          type: string
+          description: The unique identifier of the payment batch
+        BatchName:
+          type: string
+          description: Name of the payment batch
+        BatchTotal:
+          type: number
+          format: double
+          description: Total amount of the payment batch
+        BatchCurrencyCode:
+          type: string
+          description: ISO 4217 currency code for the batch total
+        Count:
+          type: integer
+          description: Number of expense reports in the batch
+        PaymentMethod:
+          type: string
+          description: Payment method used for the batch
+        BatchCloseDate:
+          type: string
+          format: date-time
+          description: Date the payment batch was closed
+        URI:
+          type: string
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://us.api.concursolutions.com/oauth2/v0/authorize
+          tokenUrl: https://us.api.concursolutions.com/oauth2/v0/token
+          scopes:
+            expense.report.read: Read expense reports
+            expense.report.write: Create and modify expense reports
+            expense.report.delete: Delete expense reports
+externalDocs:
+  description: SAP Concur Expense API Reference
+  url: https://developer.concur.com/api-reference/expense/
