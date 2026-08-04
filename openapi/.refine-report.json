@@ -1,0 +1,26 @@
+{
+  "provider": "sap-concur-expense",
+  "sources": [
+    "sap-concur-expense-allocations-api-openapi.yml",
+    "sap-concur-expense-expense-entries-api-openapi.yml",
+    "sap-concur-expense-expense-reports-api-openapi.yml",
+    "sap-concur-expense-group-configurations-api-openapi.yml",
+    "sap-concur-expense-payment-batches-api-openapi.yml",
+    "sap-concur-expense-quick-expenses-api-openapi.yml",
+    "sap-concur-expense-receipt-images-api-openapi.yml"
+  ],
+  "outputs": [
+    "sap-concur-expense-allocations-api-openapi.yml",
+    "sap-concur-expense-expense-entries-api-openapi.yml",
+    "sap-concur-expense-expense-reports-api-openapi.yml",
+    "sap-concur-expense-group-configurations-api-openapi.yml",
+    "sap-concur-expense-payment-batches-api-openapi.yml",
+    "sap-concur-expense-quick-expenses-api-openapi.yml",
+    "sap-concur-expense-receipt-images-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
