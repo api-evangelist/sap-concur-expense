@@ -344,7 +344,7 @@ common:
   - type: PostmanCollection
     url: https://developer.concur.com/tools-support/postman.html
   - type: OpenAPI
-    url: openapi/sap-concur-expense-report-openapi.yml
+    url: openapi/_original/sap-concur-expense-report-openapi.yml
   - type: JSONSchema
     url: json-schema/sap-concur-expense-report-schema.json
   - type: JSONSchema
