@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SAP Concur Expense Allocations Payment Batches API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://us.api.concursolutions.com/oauth2/v0/authorize",
+      "accessTokenUrl": "https://us.api.concursolutions.com/oauth2/v0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payment Batches",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Payment Batches",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/paymentbatches",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page"
+              },
+              {
+                "name": "batchID",
+                "value": "",
+                "type": "query",
+                "description": "Filter by specific payment batch ID"
+              }
+            ]
+          },
+          "docs": "Returns payment batches for approved expense reports ready for reimbursement. Payment batches group multiple expense reports into a single payment run."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

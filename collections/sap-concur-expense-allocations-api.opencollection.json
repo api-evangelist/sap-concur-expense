@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SAP Concur Expense Allocations API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://us.api.concursolutions.com/oauth2/v0/authorize",
+      "accessTokenUrl": "https://us.api.concursolutions.com/oauth2/v0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Allocations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Expense Allocations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/allocations",
+            "params": [
+              {
+                "name": "entryID",
+                "value": "",
+                "type": "query",
+                "description": "The expense entry ID to retrieve allocations for"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns expense allocations for the specified entry ID. Allocations split an expense across multiple cost centers, projects, or GL accounts."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

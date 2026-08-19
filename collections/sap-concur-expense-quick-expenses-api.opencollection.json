@@ -1,0 +1,143 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SAP Concur Expense Allocations Quick Expenses API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://us.api.concursolutions.com/oauth2/v0/authorize",
+      "accessTokenUrl": "https://us.api.concursolutions.com/oauth2/v0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Quick Expenses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Quick Expenses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              },
+              {
+                "name": "modifiedDateBefore",
+                "value": "",
+                "type": "query",
+                "description": "Return quick expenses modified before this date"
+              },
+              {
+                "name": "modifiedDateAfter",
+                "value": "",
+                "type": "query",
+                "description": "Return quick expenses modified after this date"
+              }
+            ]
+          },
+          "docs": "Returns quick expenses for the current user. Quick expenses are unassigned expense records captured before being added to an expense report."
+        },
+        {
+          "info": {
+            "name": "Create Quick Expense",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new quick expense record. Quick expenses can be created without an associated expense report and promoted to a full report entry later."
+        },
+        {
+          "info": {
+            "name": "Get Quick Expense",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the quick expense"
+              }
+            ]
+          },
+          "docs": "Returns a single quick expense by its ID."
+        },
+        {
+          "info": {
+            "name": "Update Quick Expense",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the quick expense"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing quick expense record."
+        },
+        {
+          "info": {
+            "name": "Delete Quick Expense",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/quickexpenses/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the quick expense"
+              }
+            ]
+          },
+          "docs": "Deletes a quick expense record."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

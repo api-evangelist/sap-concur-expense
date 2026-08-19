@@ -1,0 +1,137 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SAP Concur Expense Allocations Expense Entries API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://us.api.concursolutions.com/oauth2/v0/authorize",
+      "accessTokenUrl": "https://us.api.concursolutions.com/oauth2/v0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Expense Entries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Expense Entries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries",
+            "params": [
+              {
+                "name": "reportID",
+                "value": "",
+                "type": "query",
+                "description": "The unique identifier of the expense report"
+              },
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              }
+            ]
+          },
+          "docs": "Returns a collection of expense entries for the specified report ID. Each entry represents a single expense line item with amount, date, category, and supporting details."
+        },
+        {
+          "info": {
+            "name": "Create Expense Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new expense entry within an expense report. The report must exist and be in draft state. The entry requires an expense type code, transaction date, and transaction amount."
+        },
+        {
+          "info": {
+            "name": "Get Expense Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense entry"
+              }
+            ]
+          },
+          "docs": "Returns a single expense entry by its ID, including all form field values, itemizations, and attendee information."
+        },
+        {
+          "info": {
+            "name": "Update Expense Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense entry"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing expense entry. Only entries in draft reports can be modified."
+        },
+        {
+          "info": {
+            "name": "Delete Expense Entry",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/entries/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense entry"
+              }
+            ]
+          },
+          "docs": "Deletes an expense entry from a draft expense report."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SAP Concur Expense Allocations Group Configurations API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://us.api.concursolutions.com/oauth2/v0/authorize",
+      "accessTokenUrl": "https://us.api.concursolutions.com/oauth2/v0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Group Configurations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Expense Group Configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/expensegroupconfigurations",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page"
+              },
+              {
+                "name": "userID",
+                "value": "",
+                "type": "query",
+                "description": "The login ID of the user to retrieve configurations for"
+              }
+            ]
+          },
+          "docs": "Returns expense group policy configurations for the current user. Configurations define available expense types, payment types, allowable business purposes, and workflow approval rules."
+        },
+        {
+          "info": {
+            "name": "Get Expense Group Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/expensegroupconfigurations/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense group configuration"
+              }
+            ]
+          },
+          "docs": "Returns a single expense group configuration by its ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

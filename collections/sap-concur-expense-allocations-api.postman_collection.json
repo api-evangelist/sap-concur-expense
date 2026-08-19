@@ -1,0 +1,324 @@
+{
+  "item": [
+    {
+      "id": "6b1c86f4-c720-47d4-a5a7-d9119351912c",
+      "name": "Allocations",
+      "description": {
+        "content": "Manage cost center, project, or GL account allocations for expense entries. Supports percentage-based and amount-based splits.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ac824d46-62ad-42d7-888d-f317c514ebf7",
+          "name": "List Expense Allocations",
+          "request": {
+            "name": "List Expense Allocations",
+            "description": {
+              "content": "Returns expense allocations for the specified entry ID. Allocations split an expense across multiple cost centers, projects, or GL accounts.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "expense",
+                "allocations"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "entryID",
+                  "value": "<string>",
+                  "description": "(Required) The expense entry ID to retrieve allocations for"
+                },
+                {
+                  "disabled": false,
+                  "key": "offset",
+                  "value": "<string>",
+                  "description": "Starting page offset for pagination"
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Number of records to return per page (max 100)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dae04a3e-8460-4a0c-a0a2-6116b9411466",
+              "name": "Success - Returns list of allocations",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "expense",
+                    "allocations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "entryID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"Items\": [\n    {\n      \"AllocationID\": \"string\",\n      \"EntryID\": \"string\",\n      \"Percentage\": 6331.754730851243,\n      \"Amount\": 2815.268294486781,\n      \"AccountCode1\": \"string\",\n      \"AccountCode2\": \"string\",\n      \"Custom1\": \"string\",\n      \"Custom2\": \"string\",\n      \"URI\": \"string\"\n    },\n    {\n      \"AllocationID\": \"string\",\n      \"EntryID\": \"string\",\n      \"Percentage\": 7590.8774715921045,\n      \"Amount\": 7579.409763666077,\n      \"AccountCode1\": \"string\",\n      \"AccountCode2\": \"string\",\n      \"Custom1\": \"string\",\n      \"Custom2\": \"string\",\n      \"URI\": \"string\"\n    }\n  ],\n  \"NextPage\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1b2b4ae2-29d8-42b9-8e51-75967c604a1e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "expense",
+                    "allocations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "entryID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ceca9d2-26f2-44f9-a208-e1226e42f036",
+              "name": "Unauthorized",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "expense",
+                    "allocations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "entryID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c8ad1e2b-4da8-40e0-b22a-f0eb6a77161c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "expense",
+                    "allocations"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "entryID",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "offset",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://us.api.concursolutions.com/api/v3.0",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "expense.report.read expense.report.write expense.report.delete"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "https://us.api.concursolutions.com/oauth2/v0/token"
+      },
+      {
+        "key": "authUrl",
+        "value": "https://us.api.concursolutions.com/oauth2/v0/authorize"
+      },
+      {
+        "key": "grant_type",
+        "value": "authorization_code"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "860e1d51-9ea2-4ffb-b88d-20b55ee521aa",
+    "name": "SAP Concur Expense Allocations API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.\n\nContact Support:\n Name: SAP Concur Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

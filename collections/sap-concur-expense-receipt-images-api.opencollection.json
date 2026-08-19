@@ -1,0 +1,110 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SAP Concur Expense Allocations Receipt Images API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://us.api.concursolutions.com/oauth2/v0/authorize",
+      "accessTokenUrl": "https://us.api.concursolutions.com/oauth2/v0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Receipt Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Receipt Images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/receiptimages",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              },
+              {
+                "name": "entryID",
+                "value": "",
+                "type": "query",
+                "description": "Filter receipt images by expense entry ID"
+              }
+            ]
+          },
+          "docs": "Returns a collection of receipt images associated with expense entries for the current user."
+        },
+        {
+          "info": {
+            "name": "Upload Receipt Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/receiptimages"
+          },
+          "docs": "Uploads a new receipt image. The image can be in PNG, JPG, PDF, or TIFF format and will be associated with an expense entry."
+        },
+        {
+          "info": {
+            "name": "Get Receipt Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/receiptimages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the receipt image"
+              }
+            ]
+          },
+          "docs": "Returns the receipt image URL for the specified image ID."
+        },
+        {
+          "info": {
+            "name": "Delete Receipt Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/receiptimages/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the receipt image"
+              }
+            ]
+          },
+          "docs": "Deletes a receipt image by its ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

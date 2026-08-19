@@ -1,0 +1,167 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "SAP Concur Expense Allocations Expense Reports API",
+    "version": "3.0"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://us.api.concursolutions.com/oauth2/v0/authorize",
+      "accessTokenUrl": "https://us.api.concursolutions.com/oauth2/v0/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Expense Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Expense Reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports",
+            "params": [
+              {
+                "name": "offset",
+                "value": "",
+                "type": "query",
+                "description": "Starting page offset for pagination"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Number of records to return per page (max 100)"
+              },
+              {
+                "name": "approvalStatusCode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by approval status code. Valid values: A_AAFH, A_AAPH, A_ADMIN, A_APPR, A_EXTV, A_FILE, A_NOTF, A_PBDG, A_PECO, A_PEND, A_PVAL, A_RESU, A_RHLD, A_TEXP"
+              },
+              {
+                "name": "paymentStatusCode",
+                "value": "",
+                "type": "query",
+                "description": "Filter by payment status code. Valid values: P_HOLD, P_NOTP, P_PAID, P_PAYC, P_PROC"
+              },
+              {
+                "name": "modifiedDateBefore",
+                "value": "",
+                "type": "query",
+                "description": "Return reports modified before this date (ISO 8601 format)"
+              },
+              {
+                "name": "modifiedDateAfter",
+                "value": "",
+                "type": "query",
+                "description": "Return reports modified after this date (ISO 8601 format)"
+              },
+              {
+                "name": "userID",
+                "value": "",
+                "type": "query",
+                "description": "The login ID of the report owner. May only be used by company-level access token holders."
+              },
+              {
+                "name": "reimbursementMethod",
+                "value": "",
+                "type": "query",
+                "description": "Filter by reimbursement method. Valid values: ADPPAYR, APCHECK, AVI, CNQRPAY, PMTSERV"
+              }
+            ]
+          },
+          "docs": "Returns a collection of expense reports belonging to the current user or accessible via company-level access. Supports filtering by approval status, submission date, payment status, and reimbursement method."
+        },
+        {
+          "info": {
+            "name": "Create Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new expense report header. After creating the report header, expense entries can be added using the expense entries endpoint."
+        },
+        {
+          "info": {
+            "name": "Get Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense report"
+              }
+            ]
+          },
+          "docs": "Returns a single expense report by its ID. Includes report header information such as approval status, totals, and submission date."
+        },
+        {
+          "info": {
+            "name": "Update Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense report"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates an existing expense report header. Only draft reports (not yet submitted) can be updated."
+        },
+        {
+          "info": {
+            "name": "Delete Expense Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://us.api.concursolutions.com/api/v3.0/expense/reports/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the expense report"
+              }
+            ]
+          },
+          "docs": "Deletes an expense report. Only draft reports that have never been submitted can be deleted."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
