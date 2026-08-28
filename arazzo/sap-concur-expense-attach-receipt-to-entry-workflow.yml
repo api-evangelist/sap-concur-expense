@@ -13,8 +13,11 @@ info:
     underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: sapConcurExpense
-  url: ../openapi/sap-concur-expense-report-openapi.yml
+- name: expenseEntriesApi
+  url: ../openapi/sap-concur-expense-expense-entries-api-openapi.yml
+  type: openapi
+- name: receiptImagesApi
+  url: ../openapi/sap-concur-expense-receipt-images-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: attach-receipt-to-entry

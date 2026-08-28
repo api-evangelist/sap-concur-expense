@@ -11,8 +11,11 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: sapConcurExpense
-  url: ../openapi/sap-concur-expense-report-openapi.yml
+- name: allocationsApi
+  url: ../openapi/sap-concur-expense-allocations-api-openapi.yml
+  type: openapi
+- name: expenseEntriesApi
+  url: ../openapi/sap-concur-expense-expense-entries-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: inspect-entry-allocations
