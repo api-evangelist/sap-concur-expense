@@ -29,7 +29,7 @@ accessModel:
   - authentication
   generated: '2026-07-22'
   method: derived
-image: https://www.concur.com/themes/custom/concur/logo.svg
+image: ''
 url: https://developer.concur.com/
 created: '2025-01-01'
 modified: '2026-05-19'
