@@ -52,6 +52,10 @@ apis:
   version: '3.0'
   tags:
   - Compliance
+  - Invoices
+  - Tax
+  tags_raw:
+  - Compliance
   - Invoice
   - Tax
   properties:
