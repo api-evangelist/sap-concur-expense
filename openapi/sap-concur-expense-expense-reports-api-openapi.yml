@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: SAP Concur Expense Allocations Expense Reports API
+  title: SAP Concur Expense Expense Reports API
   description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
   version: '3.0'
   contact:
@@ -204,36 +204,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    ExpenseReportCreateResponse:
-      type: object
-      properties:
-        ID:
-          type: string
-          description: The unique identifier of the created expense report
-        URI:
-          type: string
-          description: URI of the created resource
-    ExpenseReportCreate:
-      type: object
-      required:
-      - Name
-      properties:
-        Name:
-          type: string
-          description: The name of the expense report
-        Comment:
-          type: string
-          description: Additional comments for the report
-        PolicyID:
-          type: string
-          description: The expense policy ID to apply
-        Purpose:
-          type: string
-          description: Business purpose for the expenses
-        UserDefinedDate:
-          type: string
-          format: date-time
-          description: User-defined date for the report
     ExpenseReportCollection:
       type: object
       properties:
@@ -244,18 +214,6 @@ components:
         NextPage:
           type: string
           description: URL to the next page of results
-    ExpenseReportUpdate:
-      type: object
-      properties:
-        Name:
-          type: string
-          description: Updated name for the expense report
-        Comment:
-          type: string
-          description: Updated comment
-        Purpose:
-          type: string
-          description: Updated business purpose
     ExpenseReport:
       type: object
       properties:
@@ -314,6 +272,48 @@ components:
         URI:
           type: string
           description: URI to retrieve this resource
+    ExpenseReportCreateResponse:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the created expense report
+        URI:
+          type: string
+          description: URI of the created resource
+    ExpenseReportUpdate:
+      type: object
+      properties:
+        Name:
+          type: string
+          description: Updated name for the expense report
+        Comment:
+          type: string
+          description: Updated comment
+        Purpose:
+          type: string
+          description: Updated business purpose
+    ExpenseReportCreate:
+      type: object
+      required:
+      - Name
+      properties:
+        Name:
+          type: string
+          description: The name of the expense report
+        Comment:
+          type: string
+          description: Additional comments for the report
+        PolicyID:
+          type: string
+          description: The expense policy ID to apply
+        Purpose:
+          type: string
+          description: Business purpose for the expenses
+        UserDefinedDate:
+          type: string
+          format: date-time
+          description: User-defined date for the report
   securitySchemes:
     OAuth2:
       type: oauth2

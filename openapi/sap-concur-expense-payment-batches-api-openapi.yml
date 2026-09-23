@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: SAP Concur Expense Allocations Payment Batches API
+  title: SAP Concur Expense Payment Batches API
   description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
   version: '3.0'
   contact:
@@ -61,15 +61,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    PaymentBatchCollection:
-      type: object
-      properties:
-        PaymentBatches:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentBatch'
-        NextPage:
-          type: string
     PaymentBatch:
       type: object
       properties:
@@ -97,6 +88,15 @@ components:
           format: date-time
           description: Date the payment batch was closed
         URI:
+          type: string
+    PaymentBatchCollection:
+      type: object
+      properties:
+        PaymentBatches:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentBatch'
+        NextPage:
           type: string
   securitySchemes:
     OAuth2:

@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: SAP Concur Expense Allocations Quick Expenses API
+  title: SAP Concur Expense Quick Expenses API
   description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
   version: '3.0'
   contact:
@@ -176,6 +176,44 @@ paths:
           description: Internal Server Error
 components:
   schemas:
+    QuickExpenseCreate:
+      type: object
+      required:
+      - TransactionDate
+      - TransactionAmount
+      - CurrencyCode
+      properties:
+        ExpenseTypeCode:
+          type: string
+          description: Expense type code
+        TransactionDate:
+          type: string
+          format: date
+          description: Date of the expense
+        TransactionAmount:
+          type: number
+          format: double
+          description: Amount of the expense
+        CurrencyCode:
+          type: string
+          description: ISO 4217 currency code
+        Comment:
+          type: string
+          description: Optional comment
+        VendorDescription:
+          type: string
+          description: Vendor or merchant name
+        LocationName:
+          type: string
+          description: Location of the expense
+    QuickExpenseCreateResponse:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the created quick expense
+        URI:
+          type: string
     QuickExpenseCollection:
       type: object
       properties:
@@ -184,23 +222,6 @@ components:
           items:
             $ref: '#/components/schemas/QuickExpense'
         NextPage:
-          type: string
-    QuickExpenseUpdate:
-      type: object
-      properties:
-        ExpenseTypeCode:
-          type: string
-        TransactionDate:
-          type: string
-          format: date
-        TransactionAmount:
-          type: number
-          format: double
-        CurrencyCode:
-          type: string
-        Comment:
-          type: string
-        VendorDescription:
           type: string
     QuickExpense:
       type: object
@@ -242,44 +263,23 @@ components:
           description: Login ID of the expense owner
         URI:
           type: string
-    QuickExpenseCreateResponse:
+    QuickExpenseUpdate:
       type: object
-      properties:
-        ID:
-          type: string
-          description: The unique identifier of the created quick expense
-        URI:
-          type: string
-    QuickExpenseCreate:
-      type: object
-      required:
-      - TransactionDate
-      - TransactionAmount
-      - CurrencyCode
       properties:
         ExpenseTypeCode:
           type: string
-          description: Expense type code
         TransactionDate:
           type: string
           format: date
-          description: Date of the expense
         TransactionAmount:
           type: number
           format: double
-          description: Amount of the expense
         CurrencyCode:
           type: string
-          description: ISO 4217 currency code
         Comment:
           type: string
-          description: Optional comment
         VendorDescription:
           type: string
-          description: Vendor or merchant name
-        LocationName:
-          type: string
-          description: Location of the expense
   securitySchemes:
     OAuth2:
       type: oauth2

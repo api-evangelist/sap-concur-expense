@@ -1,13 +1,7 @@
 {
   "provider": "sap-concur-expense",
   "sources": [
-    "sap-concur-expense-allocations-api-openapi.yml",
-    "sap-concur-expense-expense-entries-api-openapi.yml",
-    "sap-concur-expense-expense-reports-api-openapi.yml",
-    "sap-concur-expense-group-configurations-api-openapi.yml",
-    "sap-concur-expense-payment-batches-api-openapi.yml",
-    "sap-concur-expense-quick-expenses-api-openapi.yml",
-    "sap-concur-expense-receipt-images-api-openapi.yml"
+    "_original/sap-concur-expense-report-openapi.yml"
   ],
   "outputs": [
     "sap-concur-expense-allocations-api-openapi.yml",
@@ -21,6 +15,18 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "sap-concur-expense-report-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "sap-concur-expense-allocations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sap-concur-expense-expense-entries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sap-concur-expense-expense-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sap-concur-expense-group-configurations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sap-concur-expense-payment-batches-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sap-concur-expense-quick-expenses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "sap-concur-expense-receipt-images-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

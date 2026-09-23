@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: SAP Concur Expense Allocations Receipt Images API
+  title: SAP Concur Expense Receipt Images API
   description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
   version: '3.0'
   contact:
@@ -145,23 +145,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    ReceiptImageCreateResponse:
-      type: object
-      properties:
-        ID:
-          type: string
-          description: The unique identifier of the uploaded receipt image
-        URI:
-          type: string
-    ReceiptImageCollection:
-      type: object
-      properties:
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReceiptImage'
-        NextPage:
-          type: string
     ReceiptImage:
       type: object
       properties:
@@ -177,6 +160,23 @@ components:
         IsRequired:
           type: boolean
           description: Whether a receipt image is required for this entry
+        URI:
+          type: string
+    ReceiptImageCollection:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReceiptImage'
+        NextPage:
+          type: string
+    ReceiptImageCreateResponse:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the uploaded receipt image
         URI:
           type: string
   securitySchemes:

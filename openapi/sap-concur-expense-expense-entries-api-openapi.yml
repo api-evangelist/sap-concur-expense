@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: SAP Concur Expense Allocations Expense Entries API
+  title: SAP Concur Expense Expense Entries API
   description: SAP Concur Expense provides REST APIs for managing the full expense lifecycle including creating and submitting expense reports, managing individual expense entries, capturing receipt images, handling quick expenses, managing allocations across cost centers, and retrieving reimbursement payment batches. Authentication uses OAuth 2.0 with support for authorization code and refresh token flows.
   version: '3.0'
   contact:
@@ -172,54 +172,15 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    ExpenseEntryCreate:
-      type: object
-      required:
-      - ReportID
-      - ExpenseTypeCode
-      - TransactionDate
-      - TransactionAmount
-      - TransactionCurrencyCode
-      properties:
-        ReportID:
-          type: string
-          description: The parent expense report ID
-        ExpenseTypeCode:
-          type: string
-          description: Expense type code
-        TransactionDate:
-          type: string
-          format: date
-          description: Date of the expense transaction
-        TransactionAmount:
-          type: number
-          format: double
-          description: Amount of the transaction
-        TransactionCurrencyCode:
-          type: string
-          description: ISO 4217 currency code
-        BusinessPurpose:
-          type: string
-          description: Business purpose for the expense
-        VendorDescription:
-          type: string
-          description: Vendor or merchant name
-        LocationName:
-          type: string
-          description: Location where expense was incurred
-        Comment:
-          type: string
-          description: Additional notes
-    ExpenseEntryCollection:
+    ExpenseEntryCreateResponse:
       type: object
       properties:
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExpenseEntry'
-        NextPage:
+        ID:
           type: string
-          description: URL to the next page of results
+          description: The unique identifier of the created expense entry
+        URI:
+          type: string
+          description: URI of the created resource
     ExpenseEntry:
       type: object
       properties:
@@ -294,15 +255,54 @@ components:
         Comment:
           type: string
           description: Updated comment
-    ExpenseEntryCreateResponse:
+    ExpenseEntryCollection:
       type: object
       properties:
-        ID:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseEntry'
+        NextPage:
           type: string
-          description: The unique identifier of the created expense entry
-        URI:
+          description: URL to the next page of results
+    ExpenseEntryCreate:
+      type: object
+      required:
+      - ReportID
+      - ExpenseTypeCode
+      - TransactionDate
+      - TransactionAmount
+      - TransactionCurrencyCode
+      properties:
+        ReportID:
           type: string
-          description: URI of the created resource
+          description: The parent expense report ID
+        ExpenseTypeCode:
+          type: string
+          description: Expense type code
+        TransactionDate:
+          type: string
+          format: date
+          description: Date of the expense transaction
+        TransactionAmount:
+          type: number
+          format: double
+          description: Amount of the transaction
+        TransactionCurrencyCode:
+          type: string
+          description: ISO 4217 currency code
+        BusinessPurpose:
+          type: string
+          description: Business purpose for the expense
+        VendorDescription:
+          type: string
+          description: Vendor or merchant name
+        LocationName:
+          type: string
+          description: Location where expense was incurred
+        Comment:
+          type: string
+          description: Additional notes
   securitySchemes:
     OAuth2:
       type: oauth2
