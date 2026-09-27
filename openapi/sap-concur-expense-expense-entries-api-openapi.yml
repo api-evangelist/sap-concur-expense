@@ -172,15 +172,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    ExpenseEntryCreateResponse:
-      type: object
-      properties:
-        ID:
-          type: string
-          description: The unique identifier of the created expense entry
-        URI:
-          type: string
-          description: URI of the created resource
     ExpenseEntry:
       type: object
       properties:
@@ -303,6 +294,15 @@ components:
         Comment:
           type: string
           description: Additional notes
+    ExpenseEntryCreateResponse:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the created expense entry
+        URI:
+          type: string
+          description: URI of the created resource
   securitySchemes:
     OAuth2:
       type: oauth2

@@ -64,15 +64,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    AllocationCollection:
-      type: object
-      properties:
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Allocation'
-        NextPage:
-          type: string
     Allocation:
       type: object
       properties:
@@ -103,6 +94,15 @@ components:
           type: string
           description: Custom allocation field 2 (e.g., project code)
         URI:
+          type: string
+    AllocationCollection:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Allocation'
+        NextPage:
           type: string
   securitySchemes:
     OAuth2:
