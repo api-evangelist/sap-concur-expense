@@ -206,6 +206,23 @@ components:
         LocationName:
           type: string
           description: Location of the expense
+    QuickExpenseUpdate:
+      type: object
+      properties:
+        ExpenseTypeCode:
+          type: string
+        TransactionDate:
+          type: string
+          format: date
+        TransactionAmount:
+          type: number
+          format: double
+        CurrencyCode:
+          type: string
+        Comment:
+          type: string
+        VendorDescription:
+          type: string
     QuickExpenseCreateResponse:
       type: object
       properties:
@@ -262,23 +279,6 @@ components:
           type: string
           description: Login ID of the expense owner
         URI:
-          type: string
-    QuickExpenseUpdate:
-      type: object
-      properties:
-        ExpenseTypeCode:
-          type: string
-        TransactionDate:
-          type: string
-          format: date
-        TransactionAmount:
-          type: number
-          format: double
-        CurrencyCode:
-          type: string
-        Comment:
-          type: string
-        VendorDescription:
           type: string
   securitySchemes:
     OAuth2:

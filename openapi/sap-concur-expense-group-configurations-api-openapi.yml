@@ -88,6 +88,15 @@ paths:
           description: Internal Server Error
 components:
   schemas:
+    ExpenseGroupConfigCollection:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseGroupConfig'
+        NextPage:
+          type: string
     ExpenseGroupConfig:
       type: object
       properties:
@@ -110,15 +119,6 @@ components:
           type: string
           description: Form ID used for attendee lists
         URI:
-          type: string
-    ExpenseGroupConfigCollection:
-      type: object
-      properties:
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExpenseGroupConfig'
-        NextPage:
           type: string
   securitySchemes:
     OAuth2:

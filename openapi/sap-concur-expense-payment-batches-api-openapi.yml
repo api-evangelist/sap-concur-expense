@@ -61,15 +61,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    PaymentBatchCollection:
-      type: object
-      properties:
-        PaymentBatches:
-          type: array
-          items:
-            $ref: '#/components/schemas/PaymentBatch'
-        NextPage:
-          type: string
     PaymentBatch:
       type: object
       properties:
@@ -97,6 +88,15 @@ components:
           format: date-time
           description: Date the payment batch was closed
         URI:
+          type: string
+    PaymentBatchCollection:
+      type: object
+      properties:
+        PaymentBatches:
+          type: array
+          items:
+            $ref: '#/components/schemas/PaymentBatch'
+        NextPage:
           type: string
   securitySchemes:
     OAuth2:

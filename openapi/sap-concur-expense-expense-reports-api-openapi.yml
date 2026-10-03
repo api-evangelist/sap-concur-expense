@@ -204,16 +204,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    ExpenseReportCollection:
-      type: object
-      properties:
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ExpenseReport'
-        NextPage:
-          type: string
-          description: URL to the next page of results
     ExpenseReportCreate:
       type: object
       required:
@@ -235,6 +225,25 @@ components:
           type: string
           format: date-time
           description: User-defined date for the report
+    ExpenseReportCollection:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ExpenseReport'
+        NextPage:
+          type: string
+          description: URL to the next page of results
+    ExpenseReportCreateResponse:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the created expense report
+        URI:
+          type: string
+          description: URI of the created resource
     ExpenseReport:
       type: object
       properties:
@@ -293,15 +302,6 @@ components:
         URI:
           type: string
           description: URI to retrieve this resource
-    ExpenseReportCreateResponse:
-      type: object
-      properties:
-        ID:
-          type: string
-          description: The unique identifier of the created expense report
-        URI:
-          type: string
-          description: URI of the created resource
     ExpenseReportUpdate:
       type: object
       properties:
