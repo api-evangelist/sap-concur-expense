@@ -204,27 +204,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    ExpenseReportCreate:
-      type: object
-      required:
-      - Name
-      properties:
-        Name:
-          type: string
-          description: The name of the expense report
-        Comment:
-          type: string
-          description: Additional comments for the report
-        PolicyID:
-          type: string
-          description: The expense policy ID to apply
-        Purpose:
-          type: string
-          description: Business purpose for the expenses
-        UserDefinedDate:
-          type: string
-          format: date-time
-          description: User-defined date for the report
     ExpenseReportCollection:
       type: object
       properties:
@@ -235,15 +214,18 @@ components:
         NextPage:
           type: string
           description: URL to the next page of results
-    ExpenseReportCreateResponse:
+    ExpenseReportUpdate:
       type: object
       properties:
-        ID:
+        Name:
           type: string
-          description: The unique identifier of the created expense report
-        URI:
+          description: Updated name for the expense report
+        Comment:
           type: string
-          description: URI of the created resource
+          description: Updated comment
+        Purpose:
+          type: string
+          description: Updated business purpose
     ExpenseReport:
       type: object
       properties:
@@ -302,18 +284,36 @@ components:
         URI:
           type: string
           description: URI to retrieve this resource
-    ExpenseReportUpdate:
+    ExpenseReportCreate:
       type: object
+      required:
+      - Name
       properties:
         Name:
           type: string
-          description: Updated name for the expense report
+          description: The name of the expense report
         Comment:
           type: string
-          description: Updated comment
+          description: Additional comments for the report
+        PolicyID:
+          type: string
+          description: The expense policy ID to apply
         Purpose:
           type: string
-          description: Updated business purpose
+          description: Business purpose for the expenses
+        UserDefinedDate:
+          type: string
+          format: date-time
+          description: User-defined date for the report
+    ExpenseReportCreateResponse:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the created expense report
+        URI:
+          type: string
+          description: URI of the created resource
   securitySchemes:
     OAuth2:
       type: oauth2

@@ -145,23 +145,6 @@ paths:
           description: Internal Server Error
 components:
   schemas:
-    ReceiptImageCollection:
-      type: object
-      properties:
-        Items:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReceiptImage'
-        NextPage:
-          type: string
-    ReceiptImageCreateResponse:
-      type: object
-      properties:
-        ID:
-          type: string
-          description: The unique identifier of the uploaded receipt image
-        URI:
-          type: string
     ReceiptImage:
       type: object
       properties:
@@ -177,6 +160,23 @@ components:
         IsRequired:
           type: boolean
           description: Whether a receipt image is required for this entry
+        URI:
+          type: string
+    ReceiptImageCollection:
+      type: object
+      properties:
+        Items:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReceiptImage'
+        NextPage:
+          type: string
+    ReceiptImageCreateResponse:
+      type: object
+      properties:
+        ID:
+          type: string
+          description: The unique identifier of the uploaded receipt image
         URI:
           type: string
   securitySchemes:

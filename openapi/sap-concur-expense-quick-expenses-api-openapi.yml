@@ -176,6 +176,23 @@ paths:
           description: Internal Server Error
 components:
   schemas:
+    QuickExpenseUpdate:
+      type: object
+      properties:
+        ExpenseTypeCode:
+          type: string
+        TransactionDate:
+          type: string
+          format: date
+        TransactionAmount:
+          type: number
+          format: double
+        CurrencyCode:
+          type: string
+        Comment:
+          type: string
+        VendorDescription:
+          type: string
     QuickExpenseCreate:
       type: object
       required:
@@ -206,23 +223,6 @@ components:
         LocationName:
           type: string
           description: Location of the expense
-    QuickExpenseUpdate:
-      type: object
-      properties:
-        ExpenseTypeCode:
-          type: string
-        TransactionDate:
-          type: string
-          format: date
-        TransactionAmount:
-          type: number
-          format: double
-        CurrencyCode:
-          type: string
-        Comment:
-          type: string
-        VendorDescription:
-          type: string
     QuickExpenseCreateResponse:
       type: object
       properties:
